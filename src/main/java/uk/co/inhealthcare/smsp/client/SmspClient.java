@@ -4,13 +4,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.SOAPITKGateway;
-import uk.co.inhealthcare.smsp.client.smsp.Identity;
-import uk.co.inhealthcare.smsp.client.smsp.pds.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.smsp.pds.NHSNumber;
-import uk.co.inhealthcare.smsp.client.smsp.pds.Name;
-import uk.co.inhealthcare.smsp.client.smsp.pds.VerifyNHSNumberMiniService;
-import uk.co.inhealthcare.smsp.client.smsp.pds.VerifyNHSNumberRequest;
-import uk.co.inhealthcare.smsp.client.smsp.pds.VerifyNHSNumberResponse;
+import uk.co.inhealthcare.smsp.client.services.pds.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
+import uk.co.inhealthcare.smsp.client.services.pds.NHSNumber;
+import uk.co.inhealthcare.smsp.client.services.pds.Name;
+import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberMiniService;
+import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberRequest;
+import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberResponse;
 import uk.co.inhealthcare.smsp.client.soap.SOAPConnection;
 import uk.co.inhealthcare.smsp.client.soap.SimpleSOAPSender;
 import uk.co.inhealthcare.smsp.client.soap.http.HttpSoapConnection;
@@ -32,8 +32,9 @@ public class SmspClient {
 	private static final String USERNAME_PROPERTY = "username";
 	private static final String CLIENT_SERVICE_URL_PROPERTY = "clientServiceUrl";
 	private static final String AUDIT_IDENTITY_PROPERTY = "auditIdentity";
+	private static final String LOG_TRAFFIC_PROPERTY = "logTraffic";
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MiniServiceException {
 
 		enableSSLDebug();
 
@@ -41,7 +42,7 @@ public class SmspClient {
 
 		// create a connection to the smsp soap endpoint
 		SOAPConnection soapConnection = new HttpSoapConnection.Builder(getServiceUrl()).useSSL(createKeyStore())
-				.build();
+				.logTraffic(isLogTraffic()).build();
 
 		// create the client of the soap connection for sending soap messages
 		SimpleSOAPSender soapSender = new SimpleSOAPSender(soapConnection);
@@ -69,25 +70,25 @@ public class SmspClient {
 
 	}
 
+	private static boolean isLogTraffic() {
+		return Boolean.valueOf(System.getProperty(LOG_TRAFFIC_PROPERTY));
+	}
+
 	private static Identity createIdentity() {
 		String username = System.getProperty(USERNAME_PROPERTY);
 		String clientServiceUrl = System.getProperty(CLIENT_SERVICE_URL_PROPERTY);
 		String auditIdentity = System.getProperty(AUDIT_IDENTITY_PROPERTY);
-		return new Identity(username, auditIdentity, clientServiceUrl);
+		return new Identity(username, auditIdentity, clientServiceUrl, getServiceUrl());
 	}
 
 	private static void handleResponse(VerifyNHSNumberResponse response) {
-		System.out.println("RESPONSE: " + response);
+
 	}
 
 	private static VerifyNHSNumberRequest createRequest() {
-		VerifyNHSNumberRequest request = 
-				new VerifyNHSNumberRequest.Builder()
-				.dateOfBirth(new DateOfBirth(EXAMPLE_DOB))
+		VerifyNHSNumberRequest request = new VerifyNHSNumberRequest.Builder().dateOfBirth(new DateOfBirth(EXAMPLE_DOB))
 				.nhsNumber(new NHSNumber(EXAMPLE_NHS_NUMBER))
-				.name(new Name.Builder().given(EXAMPLE_GIVEN_NAME).family(EXAMPLE_FAMILY_NAME).build())
-				.build();
-		System.out.println("REQUEST: " + request);
+				.name(new Name.Builder().given(EXAMPLE_GIVEN_NAME).family(EXAMPLE_FAMILY_NAME).build()).build();
 		return request;
 	}
 
@@ -100,7 +101,7 @@ public class SmspClient {
 		return null;
 	}
 
-	private static Boolean getSSLDebug() {
+	private static Boolean isSSLDebug() {
 		return Boolean.valueOf(System.getProperty(SSL_DEBUG_PROPERTY));
 	}
 
@@ -112,7 +113,7 @@ public class SmspClient {
 	}
 
 	private static void enableSSLDebug() {
-		if (getSSLDebug()) {
+		if (isSSLDebug()) {
 			System.setProperty("javax.net.debug", "all");
 		}
 	}

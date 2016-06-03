@@ -6,6 +6,7 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HTTP;
@@ -19,6 +20,7 @@ public class HttpSoapConnection implements SOAPConnection {
 
 		private KeyStore keyStore;
 		private String serviceUrl;
+		private boolean logTraffic;
 
 		public Builder(String serviceUrl) {
 			this.serviceUrl = serviceUrl;
@@ -26,6 +28,11 @@ public class HttpSoapConnection implements SOAPConnection {
 
 		public HttpSoapConnection build() {
 			return new HttpSoapConnection(this);
+		}
+
+		public Builder logTraffic(boolean logTraffic) {
+			this.logTraffic = logTraffic;
+			return this;
 		}
 
 		public Builder useSSL(KeyStore keyStore) {
@@ -37,19 +44,28 @@ public class HttpSoapConnection implements SOAPConnection {
 
 	private String serviceUrl;
 	private KeyStore keyStore;
+	private boolean logTraffic;
+	private CloseableHttpClient httpClient;
 
 	private HttpSoapConnection(Builder builder) {
 		this.serviceUrl = builder.serviceUrl;
 		this.keyStore = builder.keyStore;
+		this.logTraffic = builder.logTraffic;
 
 		HttpClientBuilder clientBuilder = HttpClients.custom();
 		if (keyStore != null) {
 			clientBuilder.setSSLSocketFactory(keyStore.createSSLSocketFactory());
 		}
-		clientBuilder.addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
+		if (logTraffic) {
+			System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+			System.setProperty("org.apache.commons.logging.simplelog.showdatetime", "true");
+			System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http", "DEBUG");
+			//System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http.wire", "ERROR");
+		}
+
+		httpClient = clientBuilder.addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
 
 	}
-
 
 	/**
 	 * HttpClient {@link org.apache.http.HttpRequestInterceptor} implementation

@@ -7,6 +7,6 @@ package uk.co.inhealthcare.smsp.client.itk;
  */
 public interface ITKGateway {
 
-	ITKResponse send(ITKMessage itkMessage);
+	ITKMessage invoke(ITKMessage itkMessage) throws ITKGatewayException;
 
 }

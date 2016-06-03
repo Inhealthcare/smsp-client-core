@@ -1,39 +1,66 @@
 package uk.co.inhealthcare.smsp.client.itk;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
+import uk.co.inhealthcare.smsp.client.soap.SOAPMessageProcessor;
 import uk.co.inhealthcare.smsp.client.soap.SOAPSender;
 
 public class SOAPITKGateway implements ITKGateway {
 
-	private static final itk.nhs.ns._201005.ObjectFactory itkFactory = new itk.nhs.ns._201005.ObjectFactory();
-
 	private SOAPSender soapSender;
+	private MessageFactory messageFactory;
 
 	public SOAPITKGateway(SOAPSender soapSender) {
 		assert soapSender != null;
 		this.soapSender = soapSender;
+		try {
+			messageFactory = MessageFactory.newInstance();
+		} catch (SOAPException e) {
+			throw new IllegalArgumentException("Coud not create a SOAP message factory", e);
+		}
 	}
 
 	@Override
-	public ITKResponse send(ITKMessage itkMessage) {
+	public ITKMessage invoke(ITKMessage itkMessage) throws ITKGatewayException {
 
+		SOAPMessage requestMessage = null;
 		try {
+			requestMessage = messageFactory.createMessage();
 
-			MessageFactory messageFactory = MessageFactory.newInstance();
+			List<SOAPMessageProcessor> list = new ArrayList<>();
+			list.add(new SOAPBodyHandler(itkMessage.getDistributionEnvelope()));
+			list.add(new WSAddressingSOAPHander(itkMessage.getIdentity()));
+			list.add(new WSSecuritySOAPHander(itkMessage.getIdentity()));
+			
+			for (SOAPMessageProcessor soapHandler : list) {
+				requestMessage = soapHandler.process(requestMessage);
+			}
 
 		} catch (SOAPException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ITKGatewayException("Could not create a SOAP message", e);
 		}
 
-		// TODO Auto-generated method stub
-		return null;
+		SOAPMessage response = null;
+		try {
+			response = doSend(requestMessage);
+		} catch (SOAPException e) {
+			throw new ITKGatewayException("Failed to senda SOAP message", e);
+		}
+
+		try {
+			messageFactory.createMessage();
+			return null;
+		} catch (SOAPException e) {
+			throw new ITKGatewayException("Failed to senda SOAP message", e);
+		}
 	}
 
-	protected SOAPMessage doSend(SOAPMessage soapMessage) {
+	protected SOAPMessage doSend(SOAPMessage soapMessage) throws SOAPException {
 		return soapSender.send(soapMessage);
 	}
 

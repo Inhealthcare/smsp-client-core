@@ -3,8 +3,8 @@ package uk.co.inhealthcare.smsp.client.soap;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
-public interface SOAPSender {
+public interface SOAPMessageProcessor {
 
-	SOAPMessage send(SOAPMessage soapMessage) throws SOAPException;
+	SOAPMessage process(SOAPMessage message) throws SOAPException;
 
 }
