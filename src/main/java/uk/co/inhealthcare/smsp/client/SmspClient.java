@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.SOAPITKGateway;
-import uk.co.inhealthcare.smsp.client.smsp.User;
+import uk.co.inhealthcare.smsp.client.smsp.Identity;
 import uk.co.inhealthcare.smsp.client.smsp.pds.DateOfBirth;
 import uk.co.inhealthcare.smsp.client.smsp.pds.NHSNumber;
 import uk.co.inhealthcare.smsp.client.smsp.pds.Name;
@@ -53,14 +53,14 @@ public class SmspClient {
 		// create the verify nhs number service
 		VerifyNHSNumberMiniService service = new VerifyNHSNumberMiniService(itkGateway);
 
-		// create the security object
-		User user = createUser();
+		// create the identity object
+		Identity identity = createIdentity();
 
 		// create the request
 		VerifyNHSNumberRequest request = createRequest();
 
 		// invoke the service
-		VerifyNHSNumberResponse response = service.verifyNhsNumber(user, request);
+		VerifyNHSNumberResponse response = service.verifyNhsNumber(identity, request);
 
 		// handle response
 		handleResponse(response);
@@ -69,11 +69,11 @@ public class SmspClient {
 
 	}
 
-	private static User createUser() {
+	private static Identity createIdentity() {
 		String username = System.getProperty(USERNAME_PROPERTY);
 		String clientServiceUrl = System.getProperty(CLIENT_SERVICE_URL_PROPERTY);
 		String auditIdentity = System.getProperty(AUDIT_IDENTITY_PROPERTY);
-		return new User(username, auditIdentity, clientServiceUrl);
+		return new Identity(username, auditIdentity, clientServiceUrl);
 	}
 
 	private static void handleResponse(VerifyNHSNumberResponse response) {

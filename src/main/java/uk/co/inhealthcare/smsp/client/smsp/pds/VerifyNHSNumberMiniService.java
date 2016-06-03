@@ -2,7 +2,7 @@ package uk.co.inhealthcare.smsp.client.smsp.pds;
 
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.smsp.AbstractMiniService;
-import uk.co.inhealthcare.smsp.client.smsp.User;
+import uk.co.inhealthcare.smsp.client.smsp.Identity;
 
 public class VerifyNHSNumberMiniService extends AbstractMiniService {
 
@@ -10,7 +10,7 @@ public class VerifyNHSNumberMiniService extends AbstractMiniService {
 		super(itkGateway);
 	}
 
-	public VerifyNHSNumberResponse verifyNhsNumber(User user, VerifyNHSNumberRequest request) {
+	public VerifyNHSNumberResponse verifyNhsNumber(Identity identity, VerifyNHSNumberRequest request) {
 		
 		// wrap request in itk
 		
