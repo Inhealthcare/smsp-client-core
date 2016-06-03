@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>uk.co.inhealthcare.oss</groupId>
+	<artifactId>smsp-client-core</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>smsp-client-core</name>
+	<description>Core code for creating an SMSP client</description>
+	
+	<dependencies>
+	
+		<!-- jaxb xsd/xml to java -->
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-core</artifactId>
+			<version>2.2.11</version>
+		</dependency>
+		
+		<!-- http client -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		
+		<!-- common utilities -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+		
+		<!-- unit testing -->
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <version>4.12</version>
+		</dependency>
+	
+	</dependencies>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-xjc-plugin</artifactId>
+				<version>3.0.5</version>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>xsdtojava</goal>
+						</goals>
+						<configuration>
+							<sourceRoot>${project.build.directory}/generated-sources/xjc</sourceRoot>
+							<xsdOptions>
+								<xsdOption>
+									<xsdDir>${basedir}/src/main/schemas/pds/Schemas</xsdDir>
+									<xsd>COMT_MT000013GB01.xsd</xsd>
+									<xsd>COMT_MT000014GB01.xsd</xsd>
+									<xsd>COMT_MT000016GB01.xsd</xsd>
+									<xsd>distributionEnvelope-v2-0.xsd</xsd>
+									<xsd>ITKDatatypes-2010-05.xsd</xsd>
+									<xsd>ITKMessageTypes-2010-05.xsd</xsd>
+									<xsd>QUPA_MT000001GB01.xsd</xsd>
+									<xsd>QUPA_MT000002GB01.xsd</xsd>
+									<xsd>QUPA_MT000003GB01.xsd</xsd>
+									<xsd>QUPA_MT000004GB01.xsd</xsd>
+									<xsd>QUPA_MT000005GB01.xsd</xsd>
+									<bindingFile>${basedir}/src/main/schemas/xjb/bindings.xjb</bindingFile>
+								</xsdOption>
+							</xsdOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+		</plugins>
+
+	</build>
+</project>

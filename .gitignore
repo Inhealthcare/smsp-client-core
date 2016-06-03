@@ -58,3 +58,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# ECLIPSE
+# =========================
+.settings/
+.project
+.classpath
