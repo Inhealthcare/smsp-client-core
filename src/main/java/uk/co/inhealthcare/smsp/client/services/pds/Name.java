@@ -3,6 +3,7 @@ package uk.co.inhealthcare.smsp.client.services.pds;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hl7.v3.CsEntityNameUse;
 import org.hl7.v3.EnFamily;
 import org.hl7.v3.EnGiven;
 import org.hl7.v3.PNNHSPersonNameType1;
@@ -15,6 +16,7 @@ public class Name {
 
 		private String given;
 		private String family;
+		private CsEntityNameUse use;
 
 		public Builder given(String given) {
 			this.given = given;
@@ -23,6 +25,11 @@ public class Name {
 
 		public Builder family(String family) {
 			this.family = family;
+			return this;
+		}
+
+		public Builder use(CsEntityNameUse use) {
+			this.use = use;
 			return this;
 		}
 
@@ -36,12 +43,14 @@ public class Name {
 	private String family;
 	private String given;
 	private JAXBElement<QUPAMT000001GB01PersonName> personName;
+	private CsEntityNameUse use;
 
 	private Name(Builder builder) {
 		if (StringUtils.isBlank(builder.given) || StringUtils.isBlank(builder.given))
 			throw new IllegalArgumentException("Name requires a given or family part");
 		family = builder.family;
 		given = builder.given;
+		use = builder.use;
 		generatePersonName();
 	}
 
@@ -59,6 +68,10 @@ public class Name {
 			EnFamily enFamily = new EnFamily();
 			enFamily.getContent().add(family);
 			theName.getContent().add(messageFactory.createENFamily(enFamily));
+		}
+
+		if (use != null) {
+			theName.getUse().add(use);
 		}
 
 		name.setValue(theName);

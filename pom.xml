@@ -29,11 +29,11 @@
 			<version>4.5.1</version>
 		</dependency>
 
-		<!-- soap security -->
+		<!-- soap security headers -->
 		<dependency>
-			<groupId>org.apache.ws.security</groupId>
-			<artifactId>wss4j</artifactId>
-			<version>1.6.19</version>
+		    <groupId>org.apache.wss4j</groupId>
+		    <artifactId>wss4j-ws-security-dom</artifactId>
+		    <version>2.1.5</version>
 		</dependency>
 
 		<!-- common utilities -->
@@ -42,12 +42,14 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3.2</version>
 		</dependency>
-
+		
+		<!-- http://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
 		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.2</version>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-log4j12</artifactId>
+		    <version>1.7.21</version>
 		</dependency>
+				
 
 		<!-- unit testing -->
 		<dependency>

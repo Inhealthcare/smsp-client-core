@@ -66,13 +66,15 @@ public class VerifyNHSNumberRequest {
 		QUPAMT000001GB01VerifyNHSNumberRequestV10 verify = new QUPAMT000001GB01VerifyNHSNumberRequestV10();
 		verify.setMoodCode("EVN");
 		verify.setClassCode("CACT");
+		
 		IINHSIdentifierType2 requestId = new IINHSIdentifierType2();
 		requestId.setRoot(generatedRequestId);
 		verify.setId(requestId);
 		Code requestCode = new Code();
-		requestCode.setCode("verifyNHSNumberRequest-v1-0");
+		requestCode.setCode(MiniServiceMessageType.verifyNHSNumberRequest.getType());
 		requestCode.setCodeSystem("2.16.840.1.113883.2.1.3.2.4.17.284");
 		verify.setCode(requestCode);
+		
 		QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper event = new QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper();
 
 		event.setPersonDateOfBirth(this.dob.toPersonDateOfBirth());
@@ -83,7 +85,9 @@ public class VerifyNHSNumberRequest {
 
 		verify.setQueryEvent(event);
 
-		serviceRequest = new ServiceRequest(generatedRequestId, messageFactory.createVerifyNHSNumberRequestV10(verify));
+		serviceRequest = new ServiceRequest(generatedRequestId,
+				MiniServiceMessageType.verifyNHSNumberRequest.getProfileId(),
+				messageFactory.createVerifyNHSNumberRequestV10(verify));
 
 	}
 

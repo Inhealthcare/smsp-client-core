@@ -4,13 +4,13 @@ import java.util.UUID;
 
 import uk.co.inhealthcare.smsp.client.Identity;
 
-public class ITKIdentity {
+public class ITKHeaders {
 
 	private String service;
 	private Identity identity;
 	private String trackingId;
 
-	public ITKIdentity(String service, Identity identity) {
+	public ITKHeaders(String service, Identity identity) {
 		this.service = service;
 		this.identity = identity;
 		this.trackingId = UUID.randomUUID().toString().toUpperCase();

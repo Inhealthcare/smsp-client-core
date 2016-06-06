@@ -15,9 +15,9 @@ public class WSAddressingSOAPHander implements SOAPMessageProcessor {
 	private static final String XMLNS_WSA = "xmlns:wsa";
 	private static final String ADDRESSING_URL = "http://www.w3.org/2005/08/addressing";
 	private static final String WS_ADDRESSING_PREFIX = "wsa";
-	private ITKIdentity identity;
+	private ITKHeaders identity;
 
-	public WSAddressingSOAPHander(ITKIdentity identity) {
+	public WSAddressingSOAPHander(ITKHeaders identity) {
 		this.identity = identity;
 	}
 

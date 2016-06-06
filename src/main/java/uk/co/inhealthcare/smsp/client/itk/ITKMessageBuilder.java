@@ -3,6 +3,7 @@ package uk.co.inhealthcare.smsp.client.itk;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.bind.JAXBElement;
 
@@ -18,11 +19,11 @@ import uk.co.inhealthcare.smsp.client.services.pds.ServiceRequest;
 
 public class ITKMessageBuilder {
 
-	private ITKIdentity identity;
+	private ITKHeaders headers;
 	private List<ServiceRequest> serviceRequests = new ArrayList<>();
 
-	public ITKMessageBuilder(ITKIdentity itkIdentity) {
-		this.identity = itkIdentity;
+	public ITKMessageBuilder(ITKHeaders headers) {
+		this.headers = headers;
 	}
 
 	public ITKMessage build() {
@@ -37,12 +38,12 @@ public class ITKMessageBuilder {
 	private static class ITKMessageImpl implements ITKMessage {
 
 		private static final itk.nhs.ns._201005.ObjectFactory itkFactory = new itk.nhs.ns._201005.ObjectFactory();
-		private ITKIdentity identity;
+		private ITKHeaders headers;
 		private JAXBElement<DistributionEnvelopeType> distributionEnvelope;
 		private List<ServiceRequest> serviceRequests;
 
 		public ITKMessageImpl(ITKMessageBuilder builder) {
-			this.identity = builder.identity;
+			this.headers = builder.headers;
 			this.serviceRequests = builder.serviceRequests;
 			generateEnvelope();
 		}
@@ -57,13 +58,12 @@ public class ITKMessageBuilder {
 			for (ServiceRequest serviceRequest : serviceRequests) {
 
 				PayloadType payload = new PayloadType();
-				String payloadId = serviceRequest.getId();
-				payload.setId(payloadId);
+				payload.setId( createUUID() );
 				payload.getContent().add(serviceRequest.getContent());
 				payloads.getPayload().add(payload);
 
 				ManifestItemType item = new ManifestItemType();
-				item.setProfileid(identity.getService());
+				item.setProfileid(serviceRequest.getProfileId());
 				item.setMimetype("text/xml");
 				item.setBase64(Boolean.FALSE);
 				item.setCompressed(Boolean.FALSE);
@@ -80,12 +80,12 @@ public class ITKMessageBuilder {
 			manifest.setCount(BigInteger.valueOf(serviceRequests.size()));
 			header.setManifest(manifest);
 
-			header.setService(this.identity.getService());
-			header.setTrackingid(this.identity.getTrackingId());
+			header.setService(this.headers.getService());
+			header.setTrackingid(this.headers.getTrackingId());
 
 			AuditIdentityType audit = new AuditIdentityType();
 			IdentityType identity = new IdentityType();
-			identity.setUri(this.identity.getAuditIdentity());
+			identity.setUri(this.headers.getAuditIdentity());
 			audit.getId().add(identity);
 
 			header.setAuditIdentity(audit);
@@ -95,13 +95,17 @@ public class ITKMessageBuilder {
 
 		}
 
+		private String createUUID() {
+			return "uuid_" +  UUID.randomUUID().toString();
+		}
+
 		@Override
 		public JAXBElement<DistributionEnvelopeType> getDistributionEnvelope() {
 			return this.distributionEnvelope;
 		}
 		
-		public ITKIdentity getIdentity() {
-			return identity;
+		public ITKHeaders getHeaders() {
+			return headers;
 		}
 
 	}

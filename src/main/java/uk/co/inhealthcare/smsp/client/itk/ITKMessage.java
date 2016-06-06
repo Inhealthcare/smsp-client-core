@@ -6,7 +6,7 @@ import itk.nhs.ns._201005.DistributionEnvelopeType;
 
 public interface ITKMessage {
 	
-	ITKIdentity getIdentity();
+	ITKHeaders getHeaders();
 
 	JAXBElement<DistributionEnvelopeType> getDistributionEnvelope();
 	

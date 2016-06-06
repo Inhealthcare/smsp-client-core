@@ -3,7 +3,7 @@ package uk.co.inhealthcare.smsp.client.services.pds;
 import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.ITKGatewayException;
-import uk.co.inhealthcare.smsp.client.itk.ITKIdentity;
+import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.services.AbstractMiniService;
 
@@ -21,7 +21,7 @@ public class VerifyNHSNumberMiniService extends AbstractMiniService {
 		try {
 
 			// create the request
-			ITKMessage request = createITKMessageBuilder(new ITKIdentity(VERIFY_NHS_NUMBER_SERVICE, identity))
+			ITKMessage request = createITKMessageBuilder(new ITKHeaders(VERIFY_NHS_NUMBER_SERVICE, identity))
 					.addPayload(verifyNHSNumberRequest.toServiceRequest()).build();
 
 			// send the request

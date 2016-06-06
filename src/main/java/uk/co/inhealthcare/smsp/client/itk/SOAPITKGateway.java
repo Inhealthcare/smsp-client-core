@@ -34,8 +34,8 @@ public class SOAPITKGateway implements ITKGateway {
 
 			List<SOAPMessageProcessor> list = new ArrayList<>();
 			list.add(new SOAPBodyHandler(itkMessage.getDistributionEnvelope()));
-			list.add(new WSAddressingSOAPHander(itkMessage.getIdentity()));
-			list.add(new WSSecuritySOAPHander(itkMessage.getIdentity()));
+			list.add(new WSAddressingSOAPHander(itkMessage.getHeaders()));
+			list.add(new WSSecuritySOAPHander(itkMessage.getHeaders()));
 			
 			for (SOAPMessageProcessor soapHandler : list) {
 				requestMessage = soapHandler.process(requestMessage);

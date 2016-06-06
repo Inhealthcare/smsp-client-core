@@ -1,9 +1,9 @@
 package uk.co.inhealthcare.smsp.client.soap;
 
-import java.io.IOException;
-
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
+
+import org.apache.wss4j.common.util.XMLUtils;
 
 public class SimpleSOAPSender implements SOAPSender {
 
@@ -17,9 +17,11 @@ public class SimpleSOAPSender implements SOAPSender {
 	public SOAPMessage send(SOAPMessage requestMessage) throws SOAPException {
 
 		try {
-			requestMessage.writeTo(System.out);
+
+			System.out.println(XMLUtils.prettyDocumentToString(requestMessage.getSOAPBody().getOwnerDocument()));
+
 			return null;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new SOAPException("Could not send soap", e);
 		}
 	}

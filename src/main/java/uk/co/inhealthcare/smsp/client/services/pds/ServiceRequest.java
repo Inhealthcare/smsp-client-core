@@ -6,9 +6,11 @@ public class ServiceRequest {
 
 	private String id;
 	private JAXBElement<?> content;
+	private String profileId;
 
-	public ServiceRequest(String id, JAXBElement<?> content) {
+	public ServiceRequest(String id, String profileId, JAXBElement<?> content) {
 		this.id = id;
+		this.profileId = profileId;
 		this.content = content;
 	}
 
@@ -18,6 +20,10 @@ public class ServiceRequest {
 
 	public String getId() {
 		return id;
+	}
+
+	public String getProfileId() {
+		return profileId;
 	}
 
 }
