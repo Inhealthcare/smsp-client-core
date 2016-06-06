@@ -92,6 +92,12 @@ public class SmspClient {
 
 	private static void handleResponse(VerifyNHSNumberResponse response) {
 
+		System.out.println( "Response getMessageId: " + response.getMessageId() );
+		System.out.println( "Response getCode: " + response.getCode().getCode() );
+		System.out.println( "Response getCodeDescription: " + response.getCode().getDescription() );
+		System.out.println( "Response isVerified: " + response.isVerified() );
+		System.out.println( "Response getNhsNumber: " + response.getNhsNumber() );
+		
 	}
 
 	private static VerifyNHSNumberRequest createRequest() {

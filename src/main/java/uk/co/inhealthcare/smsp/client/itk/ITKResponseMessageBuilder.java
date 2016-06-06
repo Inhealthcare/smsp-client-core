@@ -21,22 +21,10 @@ public class ITKResponseMessageBuilder {
 		return new ITKMessageImpl(this);
 	}
 
-	private static class ITKMessageImpl implements ITKMessage {
-
-		private JAXBElement<DistributionEnvelopeType> distributionEnvelope;
+	private static class ITKMessageImpl extends AbstractITKMessage {
 
 		public ITKMessageImpl(ITKResponseMessageBuilder builder) {
-			this.distributionEnvelope = builder.distributionEnvelope;
-		}
-
-		@Override
-		public JAXBElement<DistributionEnvelopeType> getDistributionEnvelope() {
-			return distributionEnvelope;
-		}
-
-		@Override
-		public ITKHeaders getHeaders() {
-			return null;
+			setDistributionEnvelope( builder.distributionEnvelope );
 		}
 
 	}

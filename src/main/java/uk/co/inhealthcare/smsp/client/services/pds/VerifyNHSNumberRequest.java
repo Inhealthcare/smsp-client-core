@@ -61,7 +61,7 @@ public class VerifyNHSNumberRequest {
 
 	private void generateServiceRequest() {
 
-		String generatedRequestId = UUID.randomUUID().toString();
+		String generatedRequestId = UUID.randomUUID().toString().toUpperCase();
 
 		QUPAMT000001GB01VerifyNHSNumberRequestV10 verify = new QUPAMT000001GB01VerifyNHSNumberRequestV10();
 		verify.setMoodCode("EVN");

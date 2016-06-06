@@ -9,5 +9,7 @@ public interface ITKMessage {
 	ITKHeaders getHeaders();
 
 	JAXBElement<DistributionEnvelopeType> getDistributionEnvelope();
+
+	<T> T findPayload(PayloadQuery<T> query);
 	
 }
