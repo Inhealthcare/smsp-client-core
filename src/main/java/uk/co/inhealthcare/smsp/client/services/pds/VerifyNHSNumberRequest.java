@@ -77,10 +77,10 @@ public class VerifyNHSNumberRequest {
 		
 		QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper event = new QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper();
 
-		event.setPersonDateOfBirth(this.dob.toPersonDateOfBirth());
+		event.setPersonDateOfBirth(this.dob.toType1PersonDateOfBirth());
 		event.setPersonNHSNumber(nhsNumber.toPersonNHSNumber());
 		if (name != null) {
-			event.setPersonName(name.toPersonName());
+			event.setPersonName(name.toType1PersonName());
 		}
 
 		verify.setQueryEvent(event);
