@@ -71,6 +71,7 @@ public class SmspClient {
 		// handle response
 		handleResponse(response);
 
+		System.out.println("");
 		System.out.println("SMSP-CLIENT-TEST FINISHED");
 
 	}
@@ -92,6 +93,9 @@ public class SmspClient {
 
 	private static void handleResponse(VerifyNHSNumberResponse response) {
 
+		System.out.println("");
+		System.out.println("Verify NHS Number Response");
+		System.out.println("");
 		System.out.println( "Response getMessageId: " + response.getMessageId() );
 		System.out.println( "Response getCode: " + response.getCode().getCode() );
 		System.out.println( "Response getCodeDescription: " + response.getCode().getDescription() );

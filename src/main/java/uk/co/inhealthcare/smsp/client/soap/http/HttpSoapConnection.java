@@ -11,8 +11,10 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -21,8 +23,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 
 import uk.co.inhealthcare.smsp.client.soap.SOAPClient;
 import uk.co.inhealthcare.smsp.client.soap.SOAPConnection;
@@ -56,7 +56,7 @@ public class HttpSoapConnection implements SOAPConnection {
 			this.keyStore = keyStore;
 			return this;
 		}
-		
+
 		public Builder disableCompression(boolean disableCompression) {
 			this.disableCompression = disableCompression;
 			return this;
@@ -79,18 +79,21 @@ public class HttpSoapConnection implements SOAPConnection {
 		this.disableCompression = builder.disableCompression;
 
 		HttpClientBuilder clientBuilder = HttpClients.custom();
-		if(disableCompression) {
+		if (disableCompression) {
 			clientBuilder.disableContentCompression();
 		}
 		if (keyStore != null) {
 			clientBuilder.setSSLSocketFactory(keyStore.createSSLSocketFactory());
 		}
-		if (logTraffic) {								
-			LogManager.getLogger("org.apache.http").setLevel(Level.DEBUG);
-			LogManager.getLogger("org.apache.http.wire").setLevel(Level.DEBUG);
+		if (logTraffic) {
+			//LogManager.getLogger("org.apache.http").setLevel(Level.DEBUG);
+			//LogManager.getLogger("org.apache.http.wire").setLevel(Level.DEBUG);
 		}
 
-		httpClient = clientBuilder.addInterceptorFirst(new RemoveSoapHeadersInterceptor()).build();
+		MessageLoggerInterceptor logger = new MessageLoggerInterceptor();
+		httpClient = clientBuilder.addInterceptorFirst(new RemoveSoapHeadersInterceptor())
+				.addInterceptorLast((HttpRequestInterceptor) logger)
+				.addInterceptorFirst((HttpResponseInterceptor) logger).build();
 
 	}
 
@@ -102,23 +105,25 @@ public class HttpSoapConnection implements SOAPConnection {
 			public SOAPMessage send(SOAPMessage requestMessage) throws SOAPException {
 
 				try {
-					
+
 					HttpPost httpPost = new HttpPost(serviceUrl);
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
 					requestMessage.writeTo(out);
 					httpPost.setEntity(new ByteArrayEntity(out.toByteArray(), ContentType.TEXT_XML));
-					
-					
 
-					CloseableHttpResponse response1 = httpClient.execute(httpPost);
+					HttpContext context = HttpClientContext.create();
+					context.setAttribute(MessageLoggerInterceptor.LOGGER_ATTRIBUTE_NAME, new MessageLogger());
+					context.setAttribute(MessageLoggerInterceptor.ENABLE_LOGGING_ATTRIBUTE_NAME, Boolean.valueOf(logTraffic));
+
+					CloseableHttpResponse response1 = httpClient.execute(httpPost, context);
 					try {
-						
+
 						HttpEntity entity1 = response1.getEntity();
 
 						SOAPMessage message = factory.createFrom(entity1.getContent());
-						
+
 						EntityUtils.consume(entity1);
-						
+
 						return message;
 					} finally {
 						response1.close();
