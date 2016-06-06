@@ -1,11 +1,11 @@
 package uk.co.inhealthcare.smsp.client.services.pds;
 
-import java.util.UUID;
-
 import org.hl7.v3.IINHSIdentifierType2;
 import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10;
 import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10.Code;
 import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper;
+
+import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class VerifyNHSNumberRequest {
 
@@ -61,7 +61,7 @@ public class VerifyNHSNumberRequest {
 
 	private void generateServiceRequest() {
 
-		String generatedRequestId = UUID.randomUUID().toString().toUpperCase();
+		String generatedRequestId = DCEUtils.createUUID();
 
 		QUPAMT000001GB01VerifyNHSNumberRequestV10 verify = new QUPAMT000001GB01VerifyNHSNumberRequestV10();
 		verify.setMoodCode("EVN");

@@ -3,7 +3,6 @@ package uk.co.inhealthcare.smsp.client.itk;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import itk.nhs.ns._201005.AuditIdentityType;
 import itk.nhs.ns._201005.DistributionEnvelopeType;
@@ -14,6 +13,7 @@ import itk.nhs.ns._201005.ManifestType;
 import itk.nhs.ns._201005.PayloadType;
 import itk.nhs.ns._201005.PayloadsType;
 import uk.co.inhealthcare.smsp.client.services.pds.ServiceRequest;
+import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class ITKRequestMessageBuilder {
 
@@ -54,7 +54,7 @@ public class ITKRequestMessageBuilder {
 			for (ServiceRequest serviceRequest : serviceRequests) {
 
 				PayloadType payload = new PayloadType();
-				payload.setId(createUUID());
+				payload.setId( DCEUtils.createManifestItmUUID() );
 				payload.getContent().add(serviceRequest.getContent());
 				payloads.getPayload().add(payload);
 
@@ -89,10 +89,6 @@ public class ITKRequestMessageBuilder {
 			envelope.setHeader(header);
 			setDistributionEnvelope(itkFactory.createDistributionEnvelope(envelope));
 
-		}
-
-		private String createUUID() {
-			return "uuid_" + UUID.randomUUID().toString();
 		}
 
 	}

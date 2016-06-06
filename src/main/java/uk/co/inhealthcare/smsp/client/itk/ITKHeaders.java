@@ -1,8 +1,7 @@
 package uk.co.inhealthcare.smsp.client.itk;
 
-import java.util.UUID;
-
 import uk.co.inhealthcare.smsp.client.Identity;
+import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class ITKHeaders {
 
@@ -13,7 +12,7 @@ public class ITKHeaders {
 	public ITKHeaders(String service, Identity identity) {
 		this.service = service;
 		this.identity = identity;
-		this.trackingId = UUID.randomUUID().toString().toUpperCase();
+		this.trackingId = DCEUtils.createUUID();
 	}
 
 	public String getAuditIdentity() {

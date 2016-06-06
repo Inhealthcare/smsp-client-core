@@ -1,7 +1,5 @@
 package uk.co.inhealthcare.smsp.client.itk;
 
-import java.util.UUID;
-
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
@@ -9,6 +7,7 @@ import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
 
 import uk.co.inhealthcare.smsp.client.soap.SOAPMessageProcessor;
+import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class WSAddressingSOAPHander implements SOAPMessageProcessor {
 
@@ -36,7 +35,7 @@ public class WSAddressingSOAPHander implements SOAPMessageProcessor {
 		action.addTextNode(identity.getService());
 
 		SOAPElement messageId = header.addChildElement("MessageID", WS_ADDRESSING_PREFIX);
-		messageId.addTextNode(UUID.randomUUID().toString().toUpperCase());
+		messageId.addTextNode( DCEUtils.createUUID() );
 
 		SOAPElement to = header.addChildElement("To", WS_ADDRESSING_PREFIX);
 		to.addTextNode(identity.getServiceUrl());
