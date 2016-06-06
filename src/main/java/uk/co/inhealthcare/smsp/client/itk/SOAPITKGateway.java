@@ -3,26 +3,23 @@ package uk.co.inhealthcare.smsp.client.itk;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 
+import uk.co.inhealthcare.smsp.client.soap.SOAPMessageFactory;
 import uk.co.inhealthcare.smsp.client.soap.SOAPMessageProcessor;
 import uk.co.inhealthcare.smsp.client.soap.SOAPSender;
 
 public class SOAPITKGateway implements ITKGateway {
 
 	private SOAPSender soapSender;
-	private MessageFactory messageFactory;
+	private SOAPMessageFactory soapMessageFactory;
 
-	public SOAPITKGateway(SOAPSender soapSender) {
+	public SOAPITKGateway(SOAPSender soapSender, SOAPMessageFactory soapMessageFactory) {
 		assert soapSender != null;
+		assert soapMessageFactory != null;
 		this.soapSender = soapSender;
-		try {
-			messageFactory = MessageFactory.newInstance();
-		} catch (SOAPException e) {
-			throw new IllegalArgumentException("Coud not create a SOAP message factory", e);
-		}
+		this.soapMessageFactory = soapMessageFactory;
 	}
 
 	@Override
@@ -30,13 +27,13 @@ public class SOAPITKGateway implements ITKGateway {
 
 		SOAPMessage requestMessage = null;
 		try {
-			requestMessage = messageFactory.createMessage();
+			requestMessage = soapMessageFactory.createNew();
 
 			List<SOAPMessageProcessor> list = new ArrayList<>();
 			list.add(new SOAPBodyHandler(itkMessage.getDistributionEnvelope()));
 			list.add(new WSAddressingSOAPHander(itkMessage.getHeaders()));
 			list.add(new WSSecuritySOAPHander(itkMessage.getHeaders()));
-			
+
 			for (SOAPMessageProcessor soapHandler : list) {
 				requestMessage = soapHandler.process(requestMessage);
 			}
@@ -52,11 +49,19 @@ public class SOAPITKGateway implements ITKGateway {
 			throw new ITKGatewayException("Failed to senda SOAP message", e);
 		}
 
+		if (response == null) {
+			throw new ITKGatewayException("Could not handle SOAP response as there was none");
+		}
+
 		try {
-			messageFactory.createMessage();
-			return null;
+			// get the body here
+			DistributionEnvelopeExtractor extractor = new DistributionEnvelopeExtractor();
+			ITKResponseMessageBuilder builder = new ITKResponseMessageBuilder()
+					.distributionEnvelope(extractor.extract(response));
+
+			return builder.build();
 		} catch (SOAPException e) {
-			throw new ITKGatewayException("Failed to senda SOAP message", e);
+			throw new ITKGatewayException("Failed to read SOAP resposne", e);
 		}
 	}
 

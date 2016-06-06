@@ -25,8 +25,7 @@ public class SOAPBodyHandler implements SOAPMessageProcessor {
 
 		try {
 			DOMResult res = new DOMResult();
-			JAXBContext context = JAXBContext.newInstance(itk.nhs.ns._201005.ObjectFactory.class,
-					org.hl7.v3.ObjectFactory.class, xhtml.npfit.presentationtext.ObjectFactory.class);
+			JAXBContext context = JAXBContext.newInstance(ITKJAXB.JABXB_CONTEXTS);
 			context.createMarshaller().marshal(distributionEnvelope, res);
 			message.getSOAPBody().addDocument((Document) res.getNode());
 			return message;

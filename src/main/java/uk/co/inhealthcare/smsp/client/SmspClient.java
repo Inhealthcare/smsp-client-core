@@ -12,6 +12,7 @@ import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberRequest;
 import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberResponse;
 import uk.co.inhealthcare.smsp.client.soap.SOAPConnection;
+import uk.co.inhealthcare.smsp.client.soap.SimpleSOAPMessageFactory;
 import uk.co.inhealthcare.smsp.client.soap.SimpleSOAPSender;
 import uk.co.inhealthcare.smsp.client.soap.http.HttpSoapConnection;
 import uk.co.inhealthcare.smsp.client.soap.http.KeyStore;
@@ -33,6 +34,7 @@ public class SmspClient {
 	private static final String CLIENT_SERVICE_URL_PROPERTY = "clientServiceUrl";
 	private static final String AUDIT_IDENTITY_PROPERTY = "auditIdentity";
 	private static final String LOG_TRAFFIC_PROPERTY = "logTraffic";
+	private static final String DISABLE_COMPRESSION_PROPERTY = "disableCompression";
 
 	public static void main(String[] args) throws MiniServiceException {
 
@@ -40,16 +42,19 @@ public class SmspClient {
 
 		System.out.println("SMSP-CLIENT-TEST");
 
+		// create a factory for soap messages
+		SimpleSOAPMessageFactory factory = new SimpleSOAPMessageFactory();
+
 		// create a connection to the smsp soap endpoint
-		SOAPConnection soapConnection = new HttpSoapConnection.Builder(getServiceUrl()).useSSL(createKeyStore())
-				.logTraffic(isLogTraffic()).build();
+		SOAPConnection soapConnection = new HttpSoapConnection.Builder(getServiceUrl(), factory)
+				.useSSL(createKeyStore()).logTraffic(isLogTraffic()).disableCompression(isDisableCompression()).build();
 
 		// create the client of the soap connection for sending soap messages
 		SimpleSOAPSender soapSender = new SimpleSOAPSender(soapConnection);
 
 		// create a gateway object that takes itk messages and sends them over
 		// soap
-		ITKGateway itkGateway = new SOAPITKGateway(soapSender);
+		ITKGateway itkGateway = new SOAPITKGateway(soapSender, factory);
 
 		// create the verify nhs number service
 		VerifyNHSNumberMiniService service = new VerifyNHSNumberMiniService(itkGateway);
@@ -68,6 +73,10 @@ public class SmspClient {
 
 		System.out.println("SMSP-CLIENT-TEST FINISHED");
 
+	}
+
+	private static boolean isDisableCompression() {
+		return Boolean.valueOf(System.getProperty(DISABLE_COMPRESSION_PROPERTY));
 	}
 
 	private static boolean isLogTraffic() {

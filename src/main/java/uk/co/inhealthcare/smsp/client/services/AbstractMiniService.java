@@ -4,7 +4,7 @@ import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.ITKGatewayException;
 import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
-import uk.co.inhealthcare.smsp.client.itk.ITKMessageBuilder;
+import uk.co.inhealthcare.smsp.client.itk.ITKRequestMessageBuilder;
 
 public class AbstractMiniService {
 
@@ -18,8 +18,8 @@ public class AbstractMiniService {
 		return itkGateway.invoke(itkMessage);
 	}
 
-	protected ITKMessageBuilder createITKMessageBuilder(ITKHeaders headers) {
-		return new ITKMessageBuilder(headers);
+	protected ITKRequestMessageBuilder createITKMessageBuilder(ITKHeaders headers) {
+		return new ITKRequestMessageBuilder(headers);
 	}
 
 }

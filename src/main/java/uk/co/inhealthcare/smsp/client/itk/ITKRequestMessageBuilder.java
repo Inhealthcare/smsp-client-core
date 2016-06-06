@@ -17,12 +17,13 @@ import itk.nhs.ns._201005.PayloadType;
 import itk.nhs.ns._201005.PayloadsType;
 import uk.co.inhealthcare.smsp.client.services.pds.ServiceRequest;
 
-public class ITKMessageBuilder {
+public class ITKRequestMessageBuilder {
+
 
 	private ITKHeaders headers;
 	private List<ServiceRequest> serviceRequests = new ArrayList<>();
 
-	public ITKMessageBuilder(ITKHeaders headers) {
+	public ITKRequestMessageBuilder(ITKHeaders headers) {
 		this.headers = headers;
 	}
 
@@ -30,7 +31,7 @@ public class ITKMessageBuilder {
 		return new ITKMessageImpl(this);
 	}
 
-	public ITKMessageBuilder addPayload(ServiceRequest serviceRequest) {
+	public ITKRequestMessageBuilder addPayload(ServiceRequest serviceRequest) {
 		serviceRequests.add(serviceRequest);
 		return this;
 	}
@@ -42,7 +43,7 @@ public class ITKMessageBuilder {
 		private JAXBElement<DistributionEnvelopeType> distributionEnvelope;
 		private List<ServiceRequest> serviceRequests;
 
-		public ITKMessageImpl(ITKMessageBuilder builder) {
+		public ITKMessageImpl(ITKRequestMessageBuilder builder) {
 			this.headers = builder.headers;
 			this.serviceRequests = builder.serviceRequests;
 			generateEnvelope();
