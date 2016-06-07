@@ -2,10 +2,10 @@ package uk.co.inhealthcare.smsp.client.example;
 
 import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
-import uk.co.inhealthcare.smsp.client.services.pds.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.services.model.Name;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
-import uk.co.inhealthcare.smsp.client.services.pds.NHSNumber;
-import uk.co.inhealthcare.smsp.client.services.pds.Name;
 import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberRequest;
 import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberResponse;

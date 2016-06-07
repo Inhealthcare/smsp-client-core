@@ -13,6 +13,14 @@ import org.hl7.v3.II;
 import org.hl7.v3.PNNHSPersonNameType2;
 import org.hl7.v3.TEL;
 
+import uk.co.inhealthcare.smsp.client.services.model.Address;
+import uk.co.inhealthcare.smsp.client.services.model.Communication;
+import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.services.model.Name;
+import uk.co.inhealthcare.smsp.client.services.model.PatientDetails;
+import uk.co.inhealthcare.smsp.client.services.model.Person;
+
 public class GetPatientDetailsResponse {
 
 	public static class Builder {

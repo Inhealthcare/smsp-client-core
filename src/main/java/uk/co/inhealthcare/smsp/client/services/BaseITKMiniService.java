@@ -6,11 +6,11 @@ import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.ITKRequestMessageBuilder;
 
-public class AbstractMiniService {
+public class BaseITKMiniService {
 
 	private ITKGateway itkGateway;
 
-	public AbstractMiniService(ITKGateway itkGateway) {
+	public BaseITKMiniService(ITKGateway itkGateway) {
 		this.itkGateway = itkGateway;
 	}
 

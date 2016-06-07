@@ -2,15 +2,15 @@ package uk.co.inhealthcare.smsp.client.example;
 
 import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
-import uk.co.inhealthcare.smsp.client.services.pds.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.services.pds.Gender;
-import uk.co.inhealthcare.smsp.client.services.pds.Gender.Type;
+import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.services.model.Gender;
+import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.services.model.Name;
+import uk.co.inhealthcare.smsp.client.services.model.Gender.Type;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsRequest;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsResponse;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
-import uk.co.inhealthcare.smsp.client.services.pds.NHSNumber;
-import uk.co.inhealthcare.smsp.client.services.pds.Name;
 
 public class GetPatientDetailsMiniServiceClient extends AbstractGetPatientDetailsMiniServiceClient {
 

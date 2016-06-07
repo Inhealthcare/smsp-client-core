@@ -12,9 +12,9 @@ import uk.co.inhealthcare.smsp.client.itk.ITKGatewayException;
 import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.PayloadQuery;
-import uk.co.inhealthcare.smsp.client.services.AbstractMiniService;
+import uk.co.inhealthcare.smsp.client.services.BaseITKMiniService;
 
-public class GetNHSNumberMiniService extends AbstractMiniService {
+public class GetNHSNumberMiniService extends BaseITKMiniService {
 
 	private static final String GET_NHS_NUMBER_SERVICE = "urn:nhs-itk:services:201005:getNHSNumber-v1-0";
 

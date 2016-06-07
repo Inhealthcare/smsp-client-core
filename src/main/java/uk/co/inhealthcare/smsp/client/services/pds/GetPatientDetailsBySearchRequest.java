@@ -5,6 +5,11 @@ import org.hl7.v3.QUPAMT000004GB01GetPatientDetailsBySearchRequestV10;
 import org.hl7.v3.QUPAMT000004GB01GetPatientDetailsBySearchRequestV10.Code;
 import org.hl7.v3.QUPAMT000004GB01GetPatientDetailsBySearchRequestV10Grouper;
 
+import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.services.model.Gender;
+import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.services.model.Name;
+import uk.co.inhealthcare.smsp.client.services.model.Postcode;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class GetPatientDetailsBySearchRequest {

@@ -1,4 +1,4 @@
-package uk.co.inhealthcare.smsp.client.services.pds;
+package uk.co.inhealthcare.smsp.client.services.model;
 
 import org.hl7.v3.IVLTS;
 

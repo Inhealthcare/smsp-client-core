@@ -1,4 +1,4 @@
-package uk.co.inhealthcare.smsp.client.services.pds;
+package uk.co.inhealthcare.smsp.client.services.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -5,6 +5,9 @@ import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10;
 import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10.Code;
 import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper;
 
+import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.services.model.Name;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class VerifyNHSNumberRequest {
