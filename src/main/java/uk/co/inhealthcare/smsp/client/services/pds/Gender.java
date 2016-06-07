@@ -22,6 +22,18 @@ public class Gender {
 		public String getDescription() {
 			return description;
 		}
+
+		public static Type valueOfCode(String code) {
+			for (Type type : values()) {
+				if(type.getCode().equals(code)) {
+					return type;
+				}
+			}
+			throw new IllegalArgumentException("Unrecognised gender code");
+		}
+		
+		
+		
 	}
 	
 	private Type type;

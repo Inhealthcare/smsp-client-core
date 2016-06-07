@@ -28,8 +28,8 @@ public class GetNHSNumberResponse {
 
 	private String messageId;
 	private PDSMiniServiceResponseCode code;
-	private String nhsNumber;
-	private String localIdentifier;
+	private NHSNumber nhsNumber;
+	private LocalIdentifier localIdentifier;
 
 	public GetNHSNumberResponse(Builder builder) {
 
@@ -38,8 +38,8 @@ public class GetNHSNumberResponse {
 		}
 
 	}
-
-	public String getLocalIdentifier() {
+	
+	public LocalIdentifier getLocalIdentifier() {
 		return localIdentifier;
 	}
 
@@ -51,7 +51,7 @@ public class GetNHSNumberResponse {
 		return messageId;
 	}
 
-	public String getNhsNumber() {
+	public NHSNumber getNhsNumber() {
 		return nhsNumber;
 	}
 
@@ -70,10 +70,10 @@ public class GetNHSNumberResponse {
 
 			List<II> id = patient.getId();
 
-			nhsNumber = id.get(0).getExtension();
+			nhsNumber = new NHSNumber(id.get(0));
 
 			if (id.size() == 2) {
-				localIdentifier = id.get(1).getExtension();
+				localIdentifier = new LocalIdentifier(  id.get(1) );
 			}
 		}
 

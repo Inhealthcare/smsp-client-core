@@ -43,9 +43,9 @@ public class GetNHSNumberMiniServiceClient extends AbstractMiniServiceClient {
 
 	private void handleResponse(GetNHSNumberResponse response) {
 
-		System.out.println(EXAMPLE_POSTCODE);
+		System.out.println("");
 		System.out.println("Get NHS Number Response");
-		System.out.println(EXAMPLE_POSTCODE);
+		System.out.println("");
 		System.out.println("Response getMessageId: " + response.getMessageId());
 		System.out.println("Response getCode: " + response.getCode().getCode());
 		System.out.println("Response getCodeDescription: " + response.getCode().getDescription());

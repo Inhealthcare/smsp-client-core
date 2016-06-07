@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.hl7.v3.QUPAMT000001GB01PersonDateOfBirth;
 import org.hl7.v3.QUPAMT000002GB01PersonDateOfBirth;
+import org.hl7.v3.QUPAMT000003GB01PersonDateOfBirth;
 import org.hl7.v3.ST;
 import org.hl7.v3.TSNHSTimestampType1;
 import org.hl7.v3.TSNHSTimestampType4;
@@ -43,6 +44,19 @@ public class DateOfBirth {
 		
 		QUPAMT000002GB01PersonDateOfBirth dob = new QUPAMT000002GB01PersonDateOfBirth();
 		TSNHSTimestampType4 timestamp = new TSNHSTimestampType4();
+		timestamp.setValue(date);
+		dob.setValue(timestamp);
+		ST stdob = new ST();
+		stdob.getContent().add("Person.DateOfBirth");
+		dob.setSemanticsText(stdob);
+		return dob;
+		
+	}
+
+	public QUPAMT000003GB01PersonDateOfBirth toType3PersonDateOfBirth() {
+		
+		QUPAMT000003GB01PersonDateOfBirth dob = new QUPAMT000003GB01PersonDateOfBirth();
+		TSNHSTimestampType1 timestamp = new TSNHSTimestampType1();
 		timestamp.setValue(date);
 		dob.setValue(timestamp);
 		ST stdob = new ST();
