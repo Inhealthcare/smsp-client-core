@@ -9,7 +9,7 @@ import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
 import uk.co.inhealthcare.smsp.client.services.pds.NHSNumber;
 import uk.co.inhealthcare.smsp.client.services.pds.Name;
 
-public class GetPatientDetailsByNHSNumberMiniServiceClient extends AbstractMiniServiceClient {
+public class GetPatientDetailsByNHSNumberMiniServiceClient extends AbstractGetPatientDetailsMiniServiceClient {
 
 	private static final String EXAMPLE_NHS_NUMBER = "9449310467";
 	private static final String EXAMPLE_DOB = "20090310";
@@ -35,17 +35,6 @@ public class GetPatientDetailsByNHSNumberMiniServiceClient extends AbstractMiniS
 		// handle response
 		handleResponse(response);
 
-	}
-
-	private void handleResponse(GetPatientDetailsResponse response) {
-
-		System.out.println("");
-		System.out.println("Get Patient Details By NHS Number");
-		System.out.println("");
-		System.out.println("Response getMessageId: " + response.getMessageId());
-		System.out.println("Response getCode: " + response.getCode().getCode());
-		System.out.println("Response getCodeDescription: " + response.getCode().getDescription());
-		System.out.println("Response getPatientDetails: " + response.getPatientDetails());
 	}
 
 	private GetPatientDetailsByNHSNumberRequest createRequest() {

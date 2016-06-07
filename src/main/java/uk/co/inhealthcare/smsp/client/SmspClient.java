@@ -60,6 +60,12 @@ public class SmspClient {
 		case "getPatientDetailsByNHSNumber":
 			client = new GetPatientDetailsByNHSNumberMiniServiceClient(itkGateway, identity);
 			break;
+		case "getPatientDetailsBySearch":
+			client = new GetPatientDetailsBySearchMiniServiceClient(itkGateway, identity);
+			break;
+		case "getPatientDetails":
+			client = new GetPatientDetailsMiniServiceClient(itkGateway, identity);
+			break;
 		default:
 			System.exit(1);
 			break;
