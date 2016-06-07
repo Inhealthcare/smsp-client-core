@@ -20,7 +20,8 @@ public class LocalIdentifier {
 
 		QUPAMT000002GB01PersonLocalIdentifier local = new QUPAMT000002GB01PersonLocalIdentifier();
 		IINHSIdentifierType3 value = new IINHSIdentifierType3();
-		value.setRoot(identity);
+		value.setExtension(identity);
+		value.setRoot("1.3.5.7.9.24.68.1");
 		local.setValue(value);
 		ST st = new ST();
 		st.getContent().add("Person.LocalIdentifier");

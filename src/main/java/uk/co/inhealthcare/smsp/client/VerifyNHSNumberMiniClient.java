@@ -11,6 +11,11 @@ import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberResponse;
 
 public class VerifyNHSNumberMiniClient extends AbstractMiniServiceClient {
 
+	private final static String EXAMPLE_FAMILY_NAME = "Hedgewicke";
+	private final static String EXAMPLE_GIVEN_NAME = "Hyacinth";
+	private final static String EXAMPLE_NHS_NUMBER = "5552448715";
+	private final static String EXAMPLE_DOB = "19881123";
+
 	public VerifyNHSNumberMiniClient(ITKGateway itkGateway, Identity identity) {
 		super(itkGateway, identity);
 	}
@@ -46,11 +51,9 @@ public class VerifyNHSNumberMiniClient extends AbstractMiniServiceClient {
 	}
 
 	private static VerifyNHSNumberRequest createRequest() {
-		VerifyNHSNumberRequest request = new VerifyNHSNumberRequest.Builder()
-				.dateOfBirth(new DateOfBirth(ExampleData.EXAMPLE_DOB))
-				.nhsNumber(new NHSNumber(ExampleData.EXAMPLE_NHS_NUMBER)).name(new Name.Builder()
-						.given(ExampleData.EXAMPLE_GIVEN_NAME).family(ExampleData.EXAMPLE_FAMILY_NAME).build())
-				.build();
+		VerifyNHSNumberRequest request = new VerifyNHSNumberRequest.Builder().dateOfBirth(new DateOfBirth(EXAMPLE_DOB))
+				.nhsNumber(new NHSNumber(EXAMPLE_NHS_NUMBER))
+				.name(new Name.Builder().given(EXAMPLE_GIVEN_NAME).family(EXAMPLE_FAMILY_NAME).build()).build();
 		return request;
 	}
 
