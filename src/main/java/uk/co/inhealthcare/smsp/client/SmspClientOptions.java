@@ -15,7 +15,6 @@ public class SmspClientOptions {
 	private static final String CLIENT_SERVICE_URL_PROPERTY = "clientServiceUrl";
 	private static final String AUDIT_IDENTITY_PROPERTY = "auditIdentity";
 	private static final String LOG_TRAFFIC_PROPERTY = "logTraffic";
-	private static final String DISABLE_COMPRESSION_PROPERTY = "disableCompression";
 	private static final String SERVICE_PROPERTY = "service";
 
 	public SmspClientOptions(String[] args) {
@@ -24,10 +23,6 @@ public class SmspClientOptions {
 
 	public String getService() {
 		return System.getProperty(SERVICE_PROPERTY);
-	}
-
-	public boolean isDisableCompression() {
-		return Boolean.valueOf(System.getProperty(DISABLE_COMPRESSION_PROPERTY));
 	}
 
 	public boolean isLogTraffic() {

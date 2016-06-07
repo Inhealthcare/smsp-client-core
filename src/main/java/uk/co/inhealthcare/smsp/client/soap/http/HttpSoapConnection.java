@@ -57,11 +57,6 @@ public class HttpSoapConnection implements SOAPConnection {
 			return this;
 		}
 
-		public Builder disableCompression(boolean disableCompression) {
-			this.disableCompression = disableCompression;
-			return this;
-		}
-
 	}
 
 	private String serviceUrl;
@@ -69,25 +64,19 @@ public class HttpSoapConnection implements SOAPConnection {
 	private boolean logTraffic;
 	private CloseableHttpClient httpClient;
 	private SOAPMessageFactory factory;
-	private boolean disableCompression;
 
 	private HttpSoapConnection(Builder builder) {
 		this.serviceUrl = builder.serviceUrl;
 		this.keyStore = builder.keyStore;
 		this.logTraffic = builder.logTraffic;
 		this.factory = builder.factory;
-		this.disableCompression = builder.disableCompression;
 
 		HttpClientBuilder clientBuilder = HttpClients.custom();
-		if (disableCompression) {
+		if (logTraffic) {
 			clientBuilder.disableContentCompression();
 		}
 		if (keyStore != null) {
 			clientBuilder.setSSLSocketFactory(keyStore.createSSLSocketFactory());
-		}
-		if (logTraffic) {
-			//LogManager.getLogger("org.apache.http").setLevel(Level.DEBUG);
-			//LogManager.getLogger("org.apache.http.wire").setLevel(Level.DEBUG);
 		}
 
 		MessageLoggerInterceptor logger = new MessageLoggerInterceptor();

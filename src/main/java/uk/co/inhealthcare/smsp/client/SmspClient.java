@@ -30,8 +30,7 @@ public class SmspClient {
 
 		// create a connection to the smsp soap endpoint
 		SOAPConnection soapConnection = new HttpSoapConnection.Builder(options.getServiceUrl(), factory)
-				.useSSL(options.createKeyStore()).logTraffic(options.isLogTraffic())
-				.disableCompression(options.isDisableCompression()).build();
+				.useSSL(options.createKeyStore()).logTraffic(options.isLogTraffic()).build();
 
 		// create the client of the soap connection for sending soap messages
 		SimpleSOAPSender soapSender = new SimpleSOAPSender(soapConnection);
