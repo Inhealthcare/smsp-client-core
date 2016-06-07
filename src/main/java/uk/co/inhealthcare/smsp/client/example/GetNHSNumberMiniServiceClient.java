@@ -1,5 +1,6 @@
-package uk.co.inhealthcare.smsp.client;
+package uk.co.inhealthcare.smsp.client.example;
 
+import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.services.pds.DateOfBirth;
 import uk.co.inhealthcare.smsp.client.services.pds.Gender;

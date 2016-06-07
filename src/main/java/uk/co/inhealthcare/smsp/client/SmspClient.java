@@ -2,6 +2,9 @@ package uk.co.inhealthcare.smsp.client;
 
 import org.apache.commons.lang3.StringUtils;
 
+import uk.co.inhealthcare.smsp.client.example.ExampleClientFactory;
+import uk.co.inhealthcare.smsp.client.example.ExampleClientFactory.Service;
+import uk.co.inhealthcare.smsp.client.example.MiniServiceClient;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.SOAPITKGateway;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
@@ -47,30 +50,11 @@ public class SmspClient {
 
 		// create the identity object
 		Identity identity = createIdentity();
-		
-		// verify nhs number
-		MiniServiceClient client =null;
-		switch (getService()) {
-		case "verifyNHSNumber":
-			client = new VerifyNHSNumberMiniClient(itkGateway, identity);
-			break;
-		case "getNHSNumber":
-			client = new GetNHSNumberMiniServiceClient(itkGateway, identity);
-			break;
-		case "getPatientDetailsByNHSNumber":
-			client = new GetPatientDetailsByNHSNumberMiniServiceClient(itkGateway, identity);
-			break;
-		case "getPatientDetailsBySearch":
-			client = new GetPatientDetailsBySearchMiniServiceClient(itkGateway, identity);
-			break;
-		case "getPatientDetails":
-			client = new GetPatientDetailsMiniServiceClient(itkGateway, identity);
-			break;
-		default:
-			System.exit(1);
-			break;
-		}
-		client.run();		
+
+		// get an example client
+		ExampleClientFactory clients = new ExampleClientFactory(itkGateway, identity);
+		MiniServiceClient client = clients.forService(Service.valueOf(getService()));
+		client.run();
 
 		System.out.println("");
 		System.out.println("SMSP-CLIENT-TEST FINISHED");
@@ -95,7 +79,6 @@ public class SmspClient {
 		String auditIdentity = System.getProperty(AUDIT_IDENTITY_PROPERTY);
 		return new Identity(username, auditIdentity, clientServiceUrl, getServiceUrl());
 	}
-
 
 	private static KeyStore createKeyStore() {
 		String sslKeystoreLocation = System.getProperty(SSL_KEYSTORE_LOCATION_PROPERTY);

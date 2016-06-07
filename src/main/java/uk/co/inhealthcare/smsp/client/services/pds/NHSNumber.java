@@ -35,27 +35,30 @@ public class NHSNumber {
 	public QUPAMT000001GB01PersonNHSNumber toType1PersonNHSNumber() {
 
 		QUPAMT000001GB01PersonNHSNumber nhs = new QUPAMT000001GB01PersonNHSNumber();
+		nhs.setValue(createIdentifier());
+		nhs.setSemanticsText(createSemanticsText());
+		return nhs;
+
+	}
+
+	private ST createSemanticsText() {
+		ST stnhs = new ST();
+		stnhs.getContent().add(SEMANTICS_TEXT);
+		return stnhs;
+	}
+
+	private IINHSIdentifierType1 createIdentifier() {
 		IINHSIdentifierType1 nhsId = new IINHSIdentifierType1();
 		nhsId.setRoot(OID);
 		nhsId.setExtension(number);
-		nhs.setValue(nhsId);
-		ST stnhs = new ST();
-		stnhs.getContent().add(SEMANTICS_TEXT);
-		nhs.setSemanticsText(stnhs);
-		return nhs;
-
+		return nhsId;
 	}
 
 	public QUPAMT000003GB01PersonNHSNumber toType3PersonNHSNumber() {
 
 		QUPAMT000003GB01PersonNHSNumber nhs = new QUPAMT000003GB01PersonNHSNumber();
-		IINHSIdentifierType1 nhsId = new IINHSIdentifierType1();
-		nhsId.setRoot(OID);
-		nhsId.setExtension(number);
-		nhs.setValue(nhsId);
-		ST stnhs = new ST();
-		stnhs.getContent().add("Person.NHSNumber");
-		nhs.setSemanticsText(stnhs);
+		nhs.setValue(createIdentifier());
+		nhs.setSemanticsText(createSemanticsText());
 		return nhs;
 
 	}
@@ -63,13 +66,8 @@ public class NHSNumber {
 	public JAXBElement<QUPAMT000005GB01PersonNHSNumber> toType5PersonNHSNumber() {
 		
 		QUPAMT000005GB01PersonNHSNumber nhs = new QUPAMT000005GB01PersonNHSNumber();
-		IINHSIdentifierType1 nhsId = new IINHSIdentifierType1();
-		nhsId.setRoot("2.16.840.1.113883.2.1.4.1");
-		nhsId.setExtension(number);
-		nhs.setValue(nhsId);
-		ST stnhs = new ST();
-		stnhs.getContent().add("Person.NHSNumber");
-		nhs.setSemanticsText(stnhs);
+		nhs.setValue(createIdentifier());
+		nhs.setSemanticsText(createSemanticsText());
 		return messageFactory.createQUPAMT000005GB01GetPatientDetailsRequestV10GrouperPersonNHSNumber(nhs);
 		
 	}

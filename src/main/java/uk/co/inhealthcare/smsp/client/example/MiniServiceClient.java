@@ -1,4 +1,4 @@
-package uk.co.inhealthcare.smsp.client;
+package uk.co.inhealthcare.smsp.client.example;
 
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
 

@@ -35,11 +35,15 @@ public class DateOfBirth {
 		TSNHSTimestampType1 timestamp = new TSNHSTimestampType1();
 		timestamp.setValue(date);
 		dob.setValue(timestamp);
-		ST stdob = new ST();
-		stdob.getContent().add(SEMANTICS_TEXT);
-		dob.setSemanticsText(stdob);
+		dob.setSemanticsText(createSemanticsText());
 		return dob;
 		
+	}
+
+	private ST createSemanticsText() {
+		ST stdob = new ST();
+		stdob.getContent().add(SEMANTICS_TEXT);
+		return stdob;
 	}
 
 	public QUPAMT000002GB01PersonDateOfBirth toType2PersonDateOfBirth() {
@@ -48,9 +52,7 @@ public class DateOfBirth {
 		TSNHSTimestampType4 timestamp = new TSNHSTimestampType4();
 		timestamp.setValue(date);
 		dob.setValue(timestamp);
-		ST stdob = new ST();
-		stdob.getContent().add("Person.DateOfBirth");
-		dob.setSemanticsText(stdob);
+		dob.setSemanticsText(createSemanticsText());
 		return dob;
 		
 	}
@@ -61,9 +63,7 @@ public class DateOfBirth {
 		TSNHSTimestampType1 timestamp = new TSNHSTimestampType1();
 		timestamp.setValue(date);
 		dob.setValue(timestamp);
-		ST stdob = new ST();
-		stdob.getContent().add("Person.DateOfBirth");
-		dob.setSemanticsText(stdob);
+		dob.setSemanticsText(createSemanticsText());
 		return dob;
 		
 	}
@@ -74,9 +74,7 @@ public class DateOfBirth {
 		TSNHSTimestampType1 timestamp = new TSNHSTimestampType1();
 		timestamp.setValue(date);
 		dob.setValue(timestamp);
-		ST stdob = new ST();
-		stdob.getContent().add("Person.DateOfBirth");
-		dob.setSemanticsText(stdob);
+		dob.setSemanticsText(createSemanticsText());
 		return dob;
 		
 	}
@@ -87,9 +85,7 @@ public class DateOfBirth {
 		TSNHSTimestampType1 timestamp = new TSNHSTimestampType1();
 		timestamp.setValue(date);
 		dob.setValue(timestamp);
-		ST stdob = new ST();
-		stdob.getContent().add("Person.DateOfBirth");
-		dob.setSemanticsText(stdob);
+		dob.setSemanticsText(createSemanticsText());
 		return dob;
 		
 	}

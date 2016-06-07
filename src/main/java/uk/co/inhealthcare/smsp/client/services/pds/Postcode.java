@@ -19,54 +19,44 @@ public class Postcode {
 	}
 
 	public JAXBElement<QUPAMT000002GB01PersonPostcode> toPersonPostcode() {
-		
-		QUPAMT000002GB01PersonPostcode postCode = new QUPAMT000002GB01PersonPostcode();
-		ADNHSAddressType1 value = new ADNHSAddressType1();
 
+		QUPAMT000002GB01PersonPostcode postCode = new QUPAMT000002GB01PersonPostcode();
+		postCode.setValue(createAddress());
+		postCode.setSemanticsText(createSemanticsText());
+		return messageFactory.createQUPAMT000002GB01GetNHSNumberRequestV10GrouperPersonPostcode(postCode);
+
+	}
+
+	private ST createSemanticsText() {
+		ST st = new ST();
+		st.getContent().add("Person.Postcode");
+		return st;
+	}
+
+	private ADNHSAddressType1 createAddress() {
+		ADNHSAddressType1 value = new ADNHSAddressType1();
 		PostalCode postalCode = new PostalCode();
 		postalCode.getContent().add(postcode);
 		value.getContent().add(messageFactory.createADPostalCode(postalCode));
-		postCode.setValue(value);
-
-		ST st = new ST();
-		st.getContent().add("Person.Postcode");
-		postCode.setSemanticsText(st);
-		return messageFactory.createQUPAMT000002GB01GetNHSNumberRequestV10GrouperPersonPostcode(postCode);
-		
+		return value;
 	}
 
 	public JAXBElement<QUPAMT000004GB01PersonPostcode> toType4PersonPostcode() {
 
 		QUPAMT000004GB01PersonPostcode postCode = new QUPAMT000004GB01PersonPostcode();
-		ADNHSAddressType1 value = new ADNHSAddressType1();
-
-		PostalCode postalCode = new PostalCode();
-		postalCode.getContent().add(postcode);
-		value.getContent().add(messageFactory.createADPostalCode(postalCode));
-		postCode.setValue(value);
-
-		ST st = new ST();
-		st.getContent().add("Person.Postcode");
-		postCode.setSemanticsText(st);
+		postCode.setValue(createAddress());
+		postCode.setSemanticsText(createSemanticsText());
 		return messageFactory.createQUPAMT000004GB01GetPatientDetailsBySearchRequestV10GrouperPersonPostcode(postCode);
 
 	}
 
 	public JAXBElement<QUPAMT000005GB01PersonPostcode> toType5PersonPostcode() {
-		
+
 		QUPAMT000005GB01PersonPostcode postCode = new QUPAMT000005GB01PersonPostcode();
-		ADNHSAddressType1 value = new ADNHSAddressType1();
-		
-		PostalCode postalCode = new PostalCode();
-		postalCode.getContent().add(postcode);
-		value.getContent().add(messageFactory.createADPostalCode(postalCode));						
-		postCode.setValue(value);
-		
-		ST st = new ST();
-		st.getContent().add("Person.Postcode");
-		postCode.setSemanticsText(st);
+		postCode.setValue(createAddress());
+		postCode.setSemanticsText(createSemanticsText());
 		return messageFactory.createQUPAMT000005GB01GetPatientDetailsRequestV10GrouperPersonPostcode(postCode);
-		
+
 	}
 
 }

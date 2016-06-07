@@ -12,6 +12,8 @@ import org.hl7.v3.ST;
 
 public class LocalIdentifier {
 
+	private static final String LOCAL_OID = "1.3.5.7.9.24.68.1";
+
 	protected final org.hl7.v3.ObjectFactory messageFactory = new org.hl7.v3.ObjectFactory();
 
 	private String identity;
@@ -28,30 +30,26 @@ public class LocalIdentifier {
 		return identity;
 	}
 
-	public JAXBElement<QUPAMT000002GB01PersonLocalIdentifier> toPersonLocalIdentifier() {
+	public JAXBElement<QUPAMT000002GB01PersonLocalIdentifier> toType2PersonLocalIdentifier() {
 
 		QUPAMT000002GB01PersonLocalIdentifier local = new QUPAMT000002GB01PersonLocalIdentifier();
-		IINHSIdentifierType3 value = new IINHSIdentifierType3();
-		value.setExtension(identity);
-		value.setRoot("1.3.5.7.9.24.68.1");
-		local.setValue(value);
-		ST st = new ST();
-		st.getContent().add("Person.LocalIdentifier");
-		local.setSemanticsText(st);
+		local.setValue(createIdentifier());
+		local.setSemanticsText(createSematicsText());
 		return messageFactory.createQUPAMT000002GB01GetNHSNumberRequestV10GrouperPersonLocalIdentifier(local);
 
+	}
+
+	private ST createSematicsText() {
+		ST st = new ST();
+		st.getContent().add("Person.LocalIdentifier");
+		return st;
 	}
 
 	public JAXBElement<QUPAMT000003GB01PersonLocalIdentifier> toType3PersonLocalIdentifier() {
 
 		QUPAMT000003GB01PersonLocalIdentifier local = new QUPAMT000003GB01PersonLocalIdentifier();
-		IINHSIdentifierType3 value = new IINHSIdentifierType3();
-		value.setExtension(identity);
-		value.setRoot("1.3.5.7.9.24.68.1");
-		local.setValue(value);
-		ST st = new ST();
-		st.getContent().add("Person.LocalIdentifier");
-		local.setSemanticsText(st);
+		local.setValue(createIdentifier());
+		local.setSemanticsText(createSematicsText());
 		return messageFactory
 				.createQUPAMT000003GB01GetPatientDetailsByNHSNumberRequestV10GrouperPersonLocalIdentifier(local);
 
@@ -60,13 +58,8 @@ public class LocalIdentifier {
 	public JAXBElement<QUPAMT000004GB01PersonLocalIdentifier> toType4PersonLocalIdentifier() {
 
 		QUPAMT000004GB01PersonLocalIdentifier local = new QUPAMT000004GB01PersonLocalIdentifier();
-		IINHSIdentifierType3 value = new IINHSIdentifierType3();
-		value.setExtension(identity);
-		value.setRoot("1.3.5.7.9.24.68.1");
-		local.setValue(value);
-		ST st = new ST();
-		st.getContent().add("Person.LocalIdentifier");
-		local.setSemanticsText(st);
+		local.setValue(createIdentifier());
+		local.setSemanticsText(createSematicsText());
 		return messageFactory
 				.createQUPAMT000004GB01GetPatientDetailsBySearchRequestV10GrouperPersonLocalIdentifier(local);
 
@@ -75,15 +68,17 @@ public class LocalIdentifier {
 	public JAXBElement<QUPAMT000005GB01PersonLocalIdentifier> toType5PersonLocalIdentifier() {
 
 		QUPAMT000005GB01PersonLocalIdentifier local = new QUPAMT000005GB01PersonLocalIdentifier();
-		IINHSIdentifierType3 value = new IINHSIdentifierType3();
-		value.setExtension(identity);
-		value.setRoot("1.3.5.7.9.24.68.1");
-		local.setValue(value);
-		ST st = new ST();
-		st.getContent().add("Person.LocalIdentifier");
-		local.setSemanticsText(st);
+		local.setValue(createIdentifier());
+		local.setSemanticsText(createSematicsText());
 		return messageFactory.createQUPAMT000005GB01GetPatientDetailsRequestV10GrouperPersonLocalIdentifier(local);
 
+	}
+
+	private IINHSIdentifierType3 createIdentifier() {
+		IINHSIdentifierType3 value = new IINHSIdentifierType3();
+		value.setExtension(identity);
+		value.setRoot(LOCAL_OID);
+		return value;
 	}
 
 }

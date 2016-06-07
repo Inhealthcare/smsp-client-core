@@ -95,10 +95,10 @@ public class GetNHSNumberRequest {
 		QUPAMT000002GB01GetNHSNumberRequestV10Grouper event = new QUPAMT000002GB01GetNHSNumberRequestV10Grouper();
 
 		event.setPersonDateOfBirth( dob.toType2PersonDateOfBirth() );
-		event.setPersonGender( gender.toPersonGender() );
+		event.setPersonGender( gender.toType2PersonGender() );
 		event.setPersonName( name.toType2PersonName() );
 		if( local != null ) {
-			event.setPersonLocalIdentifier( local.toPersonLocalIdentifier() );
+			event.setPersonLocalIdentifier( local.toType2PersonLocalIdentifier() );
 		}
 		if( postcode != null ) {
 			event.setPersonPostcode( postcode.toPersonPostcode() );
