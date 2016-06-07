@@ -7,6 +7,13 @@
 	<name>smsp-client-core</name>
 	<description>Core code for creating an SMSP client</description>
 	<packaging>jar</packaging>
+	
+	<properties>
+		<release.repo.id>repo-id</release.repo.id>
+		<release.repo.url>http://repo.url</release.repo.url>
+		<snapshot.repo.id>repo-id</snapshot.repo.id>
+		<snapshot.repo.url>http://repo.url</snapshot.repo.url>
+	</properties>
 
 	<dependencies>
 
@@ -135,5 +142,20 @@
 	<scm>
 		<developerConnection>scm:git:https://github.com/Inhealthcare/smsp-client-core.git</developerConnection>
 	</scm>
+	
+	
+	<distributionManagement>
+	
+		<repository>
+			<id>${release.repo.id}</id>
+			<url>${release.repo.url}</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>${snapshot.repo.id}</id>
+			<url>${snapshot.repo.url}</url>
+		</snapshotRepository>
+		
+	</distributionManagement>
 	
 </project>
