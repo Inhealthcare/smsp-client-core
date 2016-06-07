@@ -1,13 +1,18 @@
 package uk.co.inhealthcare.smsp.client.services.pds;
 
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.v3.II;
 import org.hl7.v3.IINHSIdentifierType1;
 import org.hl7.v3.QUPAMT000001GB01PersonNHSNumber;
 import org.hl7.v3.QUPAMT000003GB01PersonNHSNumber;
+import org.hl7.v3.QUPAMT000005GB01PersonNHSNumber;
 import org.hl7.v3.ST;
 
 public class NHSNumber {
+	
+	protected final org.hl7.v3.ObjectFactory messageFactory = new org.hl7.v3.ObjectFactory();
 
 	private static final String SEMANTICS_TEXT = "Person.NHSNumber";
 	private static final String OID = "2.16.840.1.113883.2.1.4.1";
@@ -53,6 +58,20 @@ public class NHSNumber {
 		nhs.setSemanticsText(stnhs);
 		return nhs;
 
+	}
+
+	public JAXBElement<QUPAMT000005GB01PersonNHSNumber> toType5PersonNHSNumber() {
+		
+		QUPAMT000005GB01PersonNHSNumber nhs = new QUPAMT000005GB01PersonNHSNumber();
+		IINHSIdentifierType1 nhsId = new IINHSIdentifierType1();
+		nhsId.setRoot("2.16.840.1.113883.2.1.4.1");
+		nhsId.setExtension(number);
+		nhs.setValue(nhsId);
+		ST stnhs = new ST();
+		stnhs.getContent().add("Person.NHSNumber");
+		nhs.setSemanticsText(stnhs);
+		return messageFactory.createQUPAMT000005GB01GetPatientDetailsRequestV10GrouperPersonNHSNumber(nhs);
+		
 	}
 
 }

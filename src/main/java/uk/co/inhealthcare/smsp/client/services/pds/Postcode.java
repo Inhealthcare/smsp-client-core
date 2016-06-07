@@ -6,6 +6,7 @@ import org.hl7.v3.AD.PostalCode;
 import org.hl7.v3.ADNHSAddressType1;
 import org.hl7.v3.QUPAMT000002GB01PersonPostcode;
 import org.hl7.v3.QUPAMT000004GB01PersonPostcode;
+import org.hl7.v3.QUPAMT000005GB01PersonPostcode;
 import org.hl7.v3.ST;
 
 public class Postcode {
@@ -49,6 +50,23 @@ public class Postcode {
 		postCode.setSemanticsText(st);
 		return messageFactory.createQUPAMT000004GB01GetPatientDetailsBySearchRequestV10GrouperPersonPostcode(postCode);
 
+	}
+
+	public JAXBElement<QUPAMT000005GB01PersonPostcode> toType5PersonPostcode() {
+		
+		QUPAMT000005GB01PersonPostcode postCode = new QUPAMT000005GB01PersonPostcode();
+		ADNHSAddressType1 value = new ADNHSAddressType1();
+		
+		PostalCode postalCode = new PostalCode();
+		postalCode.getContent().add(postcode);
+		value.getContent().add(messageFactory.createADPostalCode(postalCode));						
+		postCode.setValue(value);
+		
+		ST st = new ST();
+		st.getContent().add("Person.Postcode");
+		postCode.setSemanticsText(st);
+		return messageFactory.createQUPAMT000005GB01GetPatientDetailsRequestV10GrouperPersonPostcode(postCode);
+		
 	}
 
 }

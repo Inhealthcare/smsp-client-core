@@ -19,6 +19,7 @@ import org.hl7.v3.QUPAMT000001GB01PersonName;
 import org.hl7.v3.QUPAMT000002GB01PersonName;
 import org.hl7.v3.QUPAMT000003GB01PersonName;
 import org.hl7.v3.QUPAMT000004GB01PersonName;
+import org.hl7.v3.QUPAMT000005GB01PersonName;
 import org.hl7.v3.ST;
 
 public class Name {
@@ -189,6 +190,32 @@ public class Name {
 		name.setSemanticsText(stName);
 
 		return name;
+
+	}
+
+	public JAXBElement<QUPAMT000005GB01PersonName> toType5PersonName() {
+
+		QUPAMT000005GB01PersonName name = new QUPAMT000005GB01PersonName();
+		PNNHSPersonNameType1 theName = new PNNHSPersonNameType1();
+
+		for (String g : given) {
+			EnGiven enGiven = new EnGiven();
+			enGiven.getContent().add(g);
+			theName.getContent().add(messageFactory.createENGiven(enGiven));
+		}
+
+		if (StringUtils.isNotBlank(family)) {
+			EnFamily enFamily = new EnFamily();
+			enFamily.getContent().add(family);
+			theName.getContent().add(messageFactory.createENFamily(enFamily));
+		}
+
+		name.setValue(theName);
+		ST stName = new ST();
+		stName.getContent().add("Person.Name");
+		name.setSemanticsText(stName);
+
+		return messageFactory.createQUPAMT000005GB01GetPatientDetailsRequestV10GrouperPersonName(name);
 
 	}
 

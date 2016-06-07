@@ -1,7 +1,10 @@
 package uk.co.inhealthcare.smsp.client.services.pds;
 
+import javax.xml.bind.JAXBElement;
+
 import org.hl7.v3.QUPAMT000002GB01PersonGender;
 import org.hl7.v3.QUPAMT000004GB01PersonGender;
+import org.hl7.v3.QUPAMT000005GB01PersonGender;
 import org.hl7.v3.ST;
 
 public class Gender {
@@ -37,6 +40,8 @@ public class Gender {
 		
 	}
 	
+	protected final org.hl7.v3.ObjectFactory messageFactory = new org.hl7.v3.ObjectFactory();
+	
 	private Type type;
 
 	public Gender(Type type) {
@@ -67,6 +72,20 @@ public class Gender {
 		gender.setSemanticsText(st);
 		return gender;
 
+	}
+
+	public JAXBElement<QUPAMT000005GB01PersonGender> toType5PersonGender() {
+
+		QUPAMT000005GB01PersonGender gender = new QUPAMT000005GB01PersonGender();
+		org.hl7.v3.QUPAMT000005GB01PersonGender.Value value = new org.hl7.v3.QUPAMT000005GB01PersonGender.Value();
+		value.setCode(type.code);
+		value.setCodeSystem("2.16.840.1.113883.2.1.3.2.4.16.25");
+		gender.setValue(value);
+		ST st = new ST();
+		st.getContent().add("Person.Gender");
+		gender.setSemanticsText(st);
+		return messageFactory.createQUPAMT000005GB01GetPatientDetailsRequestV10GrouperPersonGender(gender);
+		
 	}
 
 }

@@ -8,6 +8,7 @@ import org.hl7.v3.QUPAMT000001GB01PersonDateOfBirth;
 import org.hl7.v3.QUPAMT000002GB01PersonDateOfBirth;
 import org.hl7.v3.QUPAMT000003GB01PersonDateOfBirth;
 import org.hl7.v3.QUPAMT000004GB01PersonDateOfBirth;
+import org.hl7.v3.QUPAMT000005GB01PersonDateOfBirth;
 import org.hl7.v3.ST;
 import org.hl7.v3.TSNHSTimestampType1;
 import org.hl7.v3.TSNHSTimestampType4;
@@ -70,6 +71,19 @@ public class DateOfBirth {
 	public QUPAMT000004GB01PersonDateOfBirth toType4PersonDateOfBirth() {
 		
 		QUPAMT000004GB01PersonDateOfBirth dob = new QUPAMT000004GB01PersonDateOfBirth();
+		TSNHSTimestampType1 timestamp = new TSNHSTimestampType1();
+		timestamp.setValue(date);
+		dob.setValue(timestamp);
+		ST stdob = new ST();
+		stdob.getContent().add("Person.DateOfBirth");
+		dob.setSemanticsText(stdob);
+		return dob;
+		
+	}
+
+	public QUPAMT000005GB01PersonDateOfBirth toType5PersonDateOfBirth() {
+		
+		QUPAMT000005GB01PersonDateOfBirth dob = new QUPAMT000005GB01PersonDateOfBirth();
 		TSNHSTimestampType1 timestamp = new TSNHSTimestampType1();
 		timestamp.setValue(date);
 		dob.setValue(timestamp);
