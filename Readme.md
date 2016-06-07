@@ -83,3 +83,16 @@ When connecting to the Inhealthcare SMSP, you should have already been provided 
 	# Import those certificates into a keystore file using the java keytool
 	keytool -v -importkeystore -srckeystore client.p12 -srcstoretype PKCS12 -destkeystore keystore.jks -deststoretype JKS
 	
+# Further documentation
+
+* [NHS England Developer site](http://developer.nhs.uk/)
+* [Interoperability Toolkit (ITK)](http://developer.nhs.uk/testcentre/itk/) - Useful resources for ITK messages, screencasts in slide formats
+* [Anatomy of an ITK Message](http://developer.nhs.uk/wp-content/uploads/2013/03/Anatomy-of-an-ITK-Message-over-SOAP1.pdf)
+* [ITK Screencasts](https://youtube.com/channel/UC5yK75mnC8x7jDbZVakM07A?feature=relmfu)
+* [HSCIC ITK](http://systems.hscic.gov.uk/interop/itk) for standards and overview
+* [TRUD - Technology Reference data Update Distribution site for specifications](https://isd.hscic.gov.uk/trud3/user/guest/group/0/home). 
+  * Grab an account
+  * Go to the Interoperability Framework
+  * Download the ITK Core Release
+* [Toolkit Workbenchs](http://systems.hscic.gov.uk/sa/tools) for stubbing out services
+	* To stub out spine responses use the [HSCIC SPINE Toolkit Workbench (Spine TKW)](http://systems.hscic.gov.uk/sa/tools/spinetkwinstal.jar) 
