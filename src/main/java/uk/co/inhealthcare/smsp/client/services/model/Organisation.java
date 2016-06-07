@@ -23,4 +23,11 @@ public class Organisation {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Organisation [orgId=" + orgId + ", name=" + name + "]";
+	}
+	
+	
+
 }

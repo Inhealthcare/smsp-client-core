@@ -72,4 +72,11 @@ public class NHSNumber {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "NHSNumber [number=" + number + "]";
+	}
+	
+	
+
 }

@@ -31,4 +31,10 @@ public class Communication {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Communication [value=" + value + ", useablePeriods=" + useablePeriods + ", uses=" + uses + "]";
+	}
+
+	
 }

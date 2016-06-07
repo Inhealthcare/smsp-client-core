@@ -81,4 +81,11 @@ public class LocalIdentifier {
 		return value;
 	}
 
+	@Override
+	public String toString() {
+		return "LocalIdentifier [identity=" + identity + "]";
+	}
+	
+	
+
 }

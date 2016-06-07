@@ -90,4 +90,11 @@ public class DateOfBirth {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "DateOfBirth [date=" + date + "]";
+	}
+
+	
+	
 }

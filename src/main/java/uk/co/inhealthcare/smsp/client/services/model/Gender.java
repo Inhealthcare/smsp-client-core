@@ -90,4 +90,13 @@ public class Gender {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "Gender [type=" + type + "]";
+	}
+	
+	
+	
+	
+
 }

@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.namespace.QName;
 
-import org.hl7.v3.AD.PostalCode;
-import org.hl7.v3.AD.StreetAddressLine;
 import org.hl7.v3.ADNHSAddressType2;
+import org.hl7.v3.ADXP;
 import org.hl7.v3.CsPostalAddressUse;
 
 public class Address {
 
 	// should only be one
 	private List<CsPostalAddressUse> use = new ArrayList<>();
-	
+
 	private List<String> addressLines = new ArrayList<>();
 	private String postalCode;
 
@@ -29,16 +29,29 @@ public class Address {
 		List<Serializable> content = adnhsAddressType2.getContent();
 		for (Serializable serializable : content) {
 			if (serializable instanceof JAXBElement<?>) {
+				
 				Object value = ((JAXBElement) serializable).getValue();
-				if (value instanceof StreetAddressLine) {
-					addressLines.add(MessageUtils.stringValueOf(((StreetAddressLine) value).getContent()));
+				QName name = ((JAXBElement<?>) serializable).getName();
+				
+				if(name.getLocalPart().equals("postalCode")) {
+					if (value instanceof ADXP) {
+						postalCode = MessageUtils.stringValueOf(((ADXP) value).getContent());
+					}					
 				}
-				if (value instanceof PostalCode) {
-					postalCode = MessageUtils.stringValueOf(((StreetAddressLine) value).getContent());
+				if( name.getLocalPart().equals("streetAddressLine") ) {
+					if (value instanceof ADXP) {
+						addressLines.add(MessageUtils.stringValueOf(((ADXP) value).getContent()));
+					}					
 				}
+				
 			}
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return "Address [use=" + use + ", addressLines=" + addressLines + ", postalCode=" + postalCode + "]";
 	}
 
 }

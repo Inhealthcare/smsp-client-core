@@ -59,4 +59,11 @@ public class Postcode {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Postcode [postcode=" + postcode + "]";
+	}
+	
+	
+
 }

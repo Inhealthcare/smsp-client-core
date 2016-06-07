@@ -219,4 +219,11 @@ public class Name {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Name [family=" + family + ", given=" + given + ", use=" + use + ", prefix=" + prefix + "]";
+	}
+	
+	
+
 }
