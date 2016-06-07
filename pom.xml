@@ -6,6 +6,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>smsp-client-core</name>
 	<description>Core code for creating an SMSP client</description>
+	<packaging>jar</packaging>
 
 	<dependencies>
 
