@@ -27,10 +27,10 @@ public class SmspClientExampleRunner {
 		System.out.println("SMSP-CLIENT-TEST");
 
 		// create a factory for soap messages
-		SimpleSOAPMessageFactory factory = new SimpleSOAPMessageFactory();
+		SimpleSOAPMessageFactory messageFactory = new SimpleSOAPMessageFactory();
 
 		// create a connection to the smsp soap endpoint
-		SOAPConnection soapConnection = new HttpSoapConnection.Builder(options.getServiceUrl(), factory)
+		SOAPConnection soapConnection = new HttpSoapConnection.Builder(options.getServiceUrl(), messageFactory)
 				.useSSL(options.createKeyStore()).logTraffic(options.isLogTraffic()).build();
 
 		// create the client of the soap connection for sending soap messages
@@ -38,14 +38,14 @@ public class SmspClientExampleRunner {
 
 		// create a gateway object that takes itk messages and sends them over
 		// soap
-		ITKGateway itkGateway = new SOAPITKGateway(soapSender, factory);
+		ITKGateway itkGateway = new SOAPITKGateway(soapSender, messageFactory);
 
 		// create the request context object
 		RequestContext context = options.createContext();
 
 		// get an example client
-		ExampleClientFactory clients = new ExampleClientFactory(itkGateway, context);
-		MiniServiceClient client = clients.forService(Service.valueOf(options.getService()));
+		ExampleClientFactory clientFactory = new ExampleClientFactory(itkGateway, context);
+		MiniServiceClient client = clientFactory.forService(Service.valueOf(options.getService()));
 		try {
 			client.run();
 		} catch (MiniServiceException e) {

@@ -40,6 +40,8 @@ Requires maven and Java 7 to be installed and available on the system path
 
 ##Writing your own client
 
+Also see SmspClientExampleRunner.java
+
 	// create a factory for soap messages
 	SimpleSOAPMessageFactory factory = new SimpleSOAPMessageFactory();
 	
@@ -54,8 +56,8 @@ Requires maven and Java 7 to be installed and available on the system path
 	// soap
 	ITKGateway itkGateway = new SOAPITKGateway(soapSender, factory);
 	
-	// create the identity object
-	Identity identity = options.createIdentity();
+	// create the request context object
+	RequestContext context = options.createContext();
 	
 	// get an example client
 	// create the verify nhs number service
@@ -65,7 +67,7 @@ Requires maven and Java 7 to be installed and available on the system path
 	VerifyNHSNumberRequest request = createRequest();
 	
 	// invoke the service
-	VerifyNHSNumberResponse response = service.verifyNhsNumber(identity, request);
+	VerifyNHSNumberResponse response = service.verifyNhsNumber(context, request);
 	
 	// handle response
 	handleResponse(response);
