@@ -1,39 +1,29 @@
 package uk.co.inhealthcare.smsp.client.model;
 
-import javax.xml.bind.JAXBElement;
-
-import org.hl7.v3.ADNHSAddressType2;
-import org.hl7.v3.COMTMT000016GB01GPPractice;
-import org.hl7.v3.COMTMT000016GB01Organization;
-import org.hl7.v3.TEL;
-
 public class GPPractice {
 
 	private Address address;
 	private Communication communication;
+	private Organisation organisation;
 
-	public GPPractice(COMTMT000016GB01GPPractice practice) {
-
-		ADNHSAddressType2 addr = practice.getAddr();
-		if (addr != null) {
-			address = new Address(addr);
-		}
-
-		TEL telecom = practice.getTelecom();
-		if (telecom != null) {
-			communication = new Communication(telecom);
-		}
-
-		JAXBElement<COMTMT000016GB01Organization> orgWrapper = practice.getLocationOrganization();
-		if (orgWrapper != null) {
-
-			COMTMT000016GB01Organization org = orgWrapper.getValue();
-
-			new Organisation(org);
-
-		}
-
+	public GPPractice(Address address, Communication communication, Organisation organisation) {
+		this.address = address;
+		this.communication = communication;
+		this.organisation = organisation;
 	}
+	
+	public Organisation getOrganisation() {
+		return organisation;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+	
+	public Communication getCommunication() {
+		return communication;
+	}
+	
 
 	@Override
 	public String toString() {

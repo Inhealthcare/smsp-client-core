@@ -13,13 +13,8 @@ import org.hl7.v3.II;
 import org.hl7.v3.PNNHSPersonNameType2;
 import org.hl7.v3.TEL;
 
-import uk.co.inhealthcare.smsp.client.model.Address;
-import uk.co.inhealthcare.smsp.client.model.Communication;
-import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
-import uk.co.inhealthcare.smsp.client.model.NHSNumber;
-import uk.co.inhealthcare.smsp.client.model.Name;
 import uk.co.inhealthcare.smsp.client.model.PatientDetails;
-import uk.co.inhealthcare.smsp.client.model.Person;
+import uk.co.inhealthcare.smsp.client.services.factories.PatientDetailsFactory;
 
 public class GetPatientDetailsResponse {
 
@@ -36,7 +31,7 @@ public class GetPatientDetailsResponse {
 			return new GetPatientDetailsResponse(this);
 		}
 
-	}
+	}	
 
 	private String messageId;
 	private PDSMiniServiceResponseCode code;
@@ -79,32 +74,32 @@ public class GetPatientDetailsResponse {
 			
 			List<II> id = patient.getId();
 
-			builder.nhsNumber( new NHSNumber(id.get(0)) );
+			builder.nhsNumber( PatientDetailsFactory.toNHSNumber(id.get(0))  );
 
 			if (id.size() == 2) {
-				builder.localIdentifier(new LocalIdentifier(  id.get(1) ) );
+				builder.localIdentifier( PatientDetailsFactory.toLocalIdentifier(  id.get(1) ) );
 			}
 			
 			PNNHSPersonNameType2 name = patient.getName();			
 			if(name!= null) {
-				builder.name( new Name( name ) );
+				builder.name( PatientDetailsFactory.toName(name) );
 			}
 			
 			List<ADNHSAddressType2> addr = patient.getAddr();
 			for (ADNHSAddressType2 adnhsAddressType2 : addr) {
-				builder.addAddress( new Address(adnhsAddressType2) );
+				builder.addAddress( PatientDetailsFactory.toAddress(adnhsAddressType2) );
 			}
 			
 			List<TEL> telecom = patient.getTelecom();
 			for (TEL tel : telecom) {
-				builder.addCommunication( new Communication( tel ) );
+				builder.addCommunication( PatientDetailsFactory.toCommunication( tel ) );
 			}
 			
 			JAXBElement<COMTMT000016GB01Person> patientWrapper = patient.getPatientPerson();
 			if(patientWrapper!=null) {
 				
 				COMTMT000016GB01Person person = patientWrapper.getValue();				
-				builder.person( new Person(person) );
+				builder.person( PatientDetailsFactory.toPerson(person) );
 				
 			}
 			

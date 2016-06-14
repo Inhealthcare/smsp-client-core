@@ -1,11 +1,10 @@
 package uk.co.inhealthcare.smsp.client.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.hl7.v3.CsTelecommunicationAddressUse;
-import org.hl7.v3.IVLTS;
-import org.hl7.v3.TEL;
 
 public class Communication {
 
@@ -13,22 +12,23 @@ public class Communication {
 	private List<UseablePeriod> useablePeriods = new ArrayList<>();
 	private List<CsTelecommunicationAddressUse> uses = new ArrayList<>();
 
-	public Communication(TEL tel) {
 
-		value = tel.getValue();
+	public Communication(List<CsTelecommunicationAddressUse> uses, String value, List<UseablePeriod> useablePeriod) {
+		this.uses.addAll(uses);
+		this.value= value;
+		this.useablePeriods.addAll(useablePeriods);
+	}
+	
+	public Collection<UseablePeriod> getUseablePeriods() {
+		return useablePeriods;
+	}
+	
+	public Collection<CsTelecommunicationAddressUse> getUses() {
+		return uses;
+	}
 
-		List<CsTelecommunicationAddressUse> use = tel.getUse();
-		if (use != null) {
-			this.uses.addAll(use);
-		}
-
-		List<IVLTS> useablePeriod = tel.getUseablePeriod();
-		if (useablePeriod != null) {
-			for (IVLTS ivlts : useablePeriod) {
-				useablePeriods.add(new UseablePeriod(ivlts));
-			}
-		}
-
+	public String getValue() {
+		return value;
 	}
 
 	@Override

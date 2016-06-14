@@ -11,6 +11,7 @@ import org.hl7.v3.II;
 
 import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
 import uk.co.inhealthcare.smsp.client.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.services.factories.PatientDetailsFactory;
 
 public class GetNHSNumberResponse {
 
@@ -73,10 +74,10 @@ public class GetNHSNumberResponse {
 
 			List<II> id = patient.getId();
 
-			nhsNumber = new NHSNumber(id.get(0));
+			nhsNumber = PatientDetailsFactory.toNHSNumber(id.get(0));
 
 			if (id.size() == 2) {
-				localIdentifier = new LocalIdentifier(  id.get(1) );
+				localIdentifier = PatientDetailsFactory.toLocalIdentifier( id.get(1) );
 			}
 		}
 

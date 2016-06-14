@@ -1,29 +1,22 @@
 package uk.co.inhealthcare.smsp.client.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hl7.v3.CsEntityNameUse;
-import org.hl7.v3.EnFamily;
-import org.hl7.v3.EnGiven;
-import org.hl7.v3.EnPrefix;
-import org.hl7.v3.PNNHSPersonNameType2;
 
 public class Name {
 
 	public static class Builder {
 
-		private String given;
+		private List<String> given = new ArrayList<>();
 		private String family;
-		private CsEntityNameUse use;
+		private List<CsEntityNameUse> uses = new ArrayList<>();
+		private String prefix;
 
 		public Builder given(String given) {
-			this.given = given;
+			this.given.add(given);
 			return this;
 		}
 
@@ -33,7 +26,7 @@ public class Name {
 		}
 
 		public Builder use(CsEntityNameUse use) {
-			this.use = use;
+			this.uses.add(use);
 			return this;
 		}
 
@@ -41,73 +34,51 @@ public class Name {
 			return new Name(this);
 		}
 
+		public Builder uses(List<CsEntityNameUse> uses) {
+			this.uses.addAll(uses);
+			return this;
+		}
+
+		public Builder prefix(String prefix) {
+			this.prefix = prefix;
+			return this;
+		}
+
 	}
 
-	
 	private String family;
 	private List<String> given = new ArrayList<>();
 	private List<CsEntityNameUse> use = new ArrayList<>();
 	private String prefix;
 
 	private Name(Builder builder) {
-		if (StringUtils.isBlank(builder.given) || StringUtils.isBlank(builder.given))
+		if (builder.given.isEmpty() || StringUtils.isBlank(builder.family))
 			throw new IllegalArgumentException("Name requires a given or family part");
-		family = builder.family;
-		if (builder.given != null) {
-			given = Arrays.asList(builder.given);
-		}
-		if (builder.use != null) {
-			use = Arrays.asList(builder.use);
-		}
+		this.family = builder.family;
+		this.given.addAll(builder.given);
+		this.use.addAll(builder.uses);
+		this.prefix = builder.prefix;
 	}
-	
+
 	public String getFamily() {
 		return family;
 	}
-	
+
 	public List<String> getGiven() {
 		return given;
 	}
-	
+
 	public String getPrefix() {
 		return prefix;
 	}
-	
+
 	public List<CsEntityNameUse> getUse() {
 		return use;
 	}
-
-	public Name(PNNHSPersonNameType2 name) {
-		List<CsEntityNameUse> uses = name.getUse();
-		if (uses != null) {
-			this.use.addAll(uses);
-		}
-		List<Serializable> content = name.getContent();
-		if (content != null) {
-			for (Serializable serializable : content) {
-				if (serializable instanceof JAXBElement<?>) {
-					Object value = ((JAXBElement<?>) serializable).getValue();
-					if (value instanceof EnPrefix) {
-						prefix = MessageUtils.stringValueOf(((EnPrefix) value).getContent());
-					}
-					if (value instanceof EnFamily) {
-						family = MessageUtils.stringValueOf(((EnFamily) value).getContent());
-					}
-					if (value instanceof EnGiven) {
-						given.add(MessageUtils.stringValueOf(((EnGiven) value).getContent()));
-					}
-				}
-			}
-		}
-	}
-
-	
 
 	@Override
 	public String toString() {
 		return "Name [family=" + family + ", given=" + given + ", use=" + use + ", prefix=" + prefix + "]";
 	}
-	
-	
 
 }

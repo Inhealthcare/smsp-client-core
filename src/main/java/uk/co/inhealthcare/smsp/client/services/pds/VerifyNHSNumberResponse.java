@@ -10,6 +10,7 @@ import org.hl7.v3.COMTMT000013GB01VerifyNHSNumberResponseV10;
 import org.hl7.v3.IINHSIdentifierType1;
 
 import uk.co.inhealthcare.smsp.client.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.services.factories.PatientDetailsFactory;
 
 public class VerifyNHSNumberResponse {
 
@@ -78,7 +79,7 @@ public class VerifyNHSNumberResponse {
 
 			IINHSIdentifierType1 id = patient.getId();
 
-			nhsNumber = new NHSNumber(id);
+			nhsNumber = PatientDetailsFactory.toNHSNumber(id);
 
 		}
 

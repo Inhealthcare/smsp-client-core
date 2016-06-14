@@ -1,4 +1,4 @@
-package uk.co.inhealthcare.smsp.client.model;
+package uk.co.inhealthcare.smsp.client.services.factories;
 
 import java.io.Serializable;
 import java.util.List;

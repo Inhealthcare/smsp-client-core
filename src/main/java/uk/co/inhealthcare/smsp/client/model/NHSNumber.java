@@ -1,11 +1,8 @@
 package uk.co.inhealthcare.smsp.client.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hl7.v3.II;
 
 public class NHSNumber {
-	
-	
 
 	private String number;
 
@@ -15,20 +12,13 @@ public class NHSNumber {
 		this.number = number;
 	}
 
-	public NHSNumber(II ii) {
-		this.number = ii.getExtension();
-	}
-	
 	public String getNumber() {
 		return number;
 	}
-
 
 	@Override
 	public String toString() {
 		return "NHSNumber [number=" + number + "]";
 	}
-	
-	
 
 }

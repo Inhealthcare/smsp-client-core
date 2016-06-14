@@ -1,16 +1,5 @@
 package uk.co.inhealthcare.smsp.client.model;
 
-import javax.xml.bind.JAXBElement;
-
-import org.hl7.v3.COMTMT000016GB01GPPractice;
-import org.hl7.v3.COMTMT000016GB01Person;
-import org.hl7.v3.COMTMT000016GB01Person.AdministrativeGenderCode;
-
-import uk.co.inhealthcare.smsp.client.model.Gender.Type;
-
-import org.hl7.v3.TSNHSTimestampType1;
-import org.hl7.v3.TSNHSTimestampType3;
-
 public class Person {
 
 	private Gender gender;
@@ -18,32 +7,27 @@ public class Person {
 	private String deceasedOn;
 	private GPPractice gp;
 
-	public Person(COMTMT000016GB01Person person) {
+	public Person(Gender gender, DateOfBirth dateOfBirth, String deceasedOn, GPPractice gp) {
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.deceasedOn = deceasedOn;
+		this.gp = gp;
+	}
 
-		AdministrativeGenderCode genderCode = person.getAdministrativeGenderCode();
-		if (genderCode != null) {
-			gender = new Gender(Type.valueOfCode(genderCode.getCode()));
-		}
+	public DateOfBirth getDateOfBirth() {
+		return dateOfBirth;
+	}
 
-		TSNHSTimestampType3 birthTime = person.getBirthTime();
-		if (birthTime != null) {
-			dateOfBirth = new DateOfBirth(birthTime.getValue());
-		}
+	public String getDeceasedOn() {
+		return deceasedOn;
+	}
 
-		TSNHSTimestampType1 deceasedTime = person.getDeceasedTime();
-		if (deceasedTime != null) {
-			deceasedOn = deceasedTime.getValue();
-		}
+	public Gender getGender() {
+		return gender;
+	}
 
-		JAXBElement<COMTMT000016GB01GPPractice> gpwrapper = person.getGPPractice();
-		if (gpwrapper != null) {
-
-			COMTMT000016GB01GPPractice practice = gpwrapper.getValue();
-
-			this.gp = new GPPractice(practice);
-
-		}
-
+	public GPPractice getGp() {
+		return gp;
 	}
 
 	@Override
