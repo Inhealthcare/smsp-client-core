@@ -6,13 +6,13 @@ import javax.xml.bind.JAXBElement;
 
 import org.hl7.v3.COMTMT000014GB01GetNHSNumberResponseV10;
 
-import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.ITKGatewayException;
 import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.PayloadQuery;
 import uk.co.inhealthcare.smsp.client.services.BaseITKMiniService;
+import uk.co.inhealthcare.smsp.client.services.Identity;
 
 public class GetNHSNumberMiniService extends BaseITKMiniService {
 

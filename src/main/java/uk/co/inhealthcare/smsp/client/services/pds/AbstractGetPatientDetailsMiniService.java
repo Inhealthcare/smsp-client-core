@@ -6,13 +6,13 @@ import javax.xml.bind.JAXBElement;
 
 import org.hl7.v3.COMTMT000016GB01GetPatientDetailsResponseV10;
 
-import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.ITKGatewayException;
 import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.PayloadQuery;
 import uk.co.inhealthcare.smsp.client.services.BaseITKMiniService;
+import uk.co.inhealthcare.smsp.client.services.Identity;
 
 abstract class AbstractGetPatientDetailsMiniService extends BaseITKMiniService {
 

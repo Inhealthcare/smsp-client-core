@@ -1,21 +1,22 @@
 package uk.co.inhealthcare.smsp.client;
 
-import uk.co.inhealthcare.smsp.client.example.ExampleClientFactory;
-import uk.co.inhealthcare.smsp.client.example.ExampleClientFactory.Service;
-import uk.co.inhealthcare.smsp.client.example.MiniServiceClient;
+import uk.co.inhealthcare.smsp.client.examples.ExampleClientFactory;
+import uk.co.inhealthcare.smsp.client.examples.MiniServiceClient;
+import uk.co.inhealthcare.smsp.client.examples.ExampleClientFactory.Service;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.SOAPITKGateway;
+import uk.co.inhealthcare.smsp.client.services.Identity;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
 import uk.co.inhealthcare.smsp.client.soap.SOAPConnection;
 import uk.co.inhealthcare.smsp.client.soap.SimpleSOAPMessageFactory;
 import uk.co.inhealthcare.smsp.client.soap.SimpleSOAPSender;
 import uk.co.inhealthcare.smsp.client.soap.http.HttpSoapConnection;
 
-public class SmspClient {
+public class SmspClientExampleRunner {
 
-	private SmspClientOptions options;
+	private SmspClientExampleRunnerOptions options;
 
-	public SmspClient(SmspClientOptions options) {
+	public SmspClientExampleRunner(SmspClientExampleRunnerOptions options) {
 		this.options = options;
 	}
 

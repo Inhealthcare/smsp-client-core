@@ -2,9 +2,10 @@ package uk.co.inhealthcare.smsp.client;
 
 import org.apache.commons.lang3.StringUtils;
 
+import uk.co.inhealthcare.smsp.client.services.Identity;
 import uk.co.inhealthcare.smsp.client.soap.http.KeyStore;
 
-public class SmspClientOptions {
+public class SmspClientExampleRunnerOptions {
 
 	// command line properties
 	private static final String SERVICE_URL_PROPERTY = "serviceUrl";
@@ -17,7 +18,7 @@ public class SmspClientOptions {
 	private static final String LOG_TRAFFIC_PROPERTY = "logTraffic";
 	private static final String SERVICE_PROPERTY = "service";
 
-	public SmspClientOptions(String[] args) {
+	public SmspClientExampleRunnerOptions(String[] args) {
 		// TODO Auto-generated constructor stub
 	}
 

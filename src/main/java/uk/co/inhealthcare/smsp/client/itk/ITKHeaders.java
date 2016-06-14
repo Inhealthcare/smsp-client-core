@@ -1,6 +1,6 @@
 package uk.co.inhealthcare.smsp.client.itk;
 
-import uk.co.inhealthcare.smsp.client.Identity;
+import uk.co.inhealthcare.smsp.client.services.Identity;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class ITKHeaders {

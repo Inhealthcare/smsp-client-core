@@ -1,4 +1,4 @@
-package uk.co.inhealthcare.smsp.client;
+package uk.co.inhealthcare.smsp.client.services;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,7 +1,7 @@
 package uk.co.inhealthcare.smsp.client.services.pds;
 
-import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
+import uk.co.inhealthcare.smsp.client.services.Identity;
 
 public class GetPatientDetailsMiniService extends AbstractGetPatientDetailsMiniService {
 

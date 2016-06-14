@@ -1,7 +1,7 @@
-package uk.co.inhealthcare.smsp.client.example;
+package uk.co.inhealthcare.smsp.client.examples;
 
-import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
+import uk.co.inhealthcare.smsp.client.services.Identity;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
 
 public abstract class AbstractMiniServiceClient implements MiniServiceClient {
