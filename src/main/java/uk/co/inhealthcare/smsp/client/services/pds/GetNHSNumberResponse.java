@@ -9,8 +9,8 @@ import org.hl7.v3.COMTMT000014GB01Patient;
 import org.hl7.v3.COMTMT000014GB01Subject;
 import org.hl7.v3.II;
 
-import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
-import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.model.NHSNumber;
 
 public class GetNHSNumberResponse {
 

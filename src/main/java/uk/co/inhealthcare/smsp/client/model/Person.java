@@ -1,14 +1,15 @@
-package uk.co.inhealthcare.smsp.client.services.model;
+package uk.co.inhealthcare.smsp.client.model;
 
 import javax.xml.bind.JAXBElement;
 
 import org.hl7.v3.COMTMT000016GB01GPPractice;
 import org.hl7.v3.COMTMT000016GB01Person;
 import org.hl7.v3.COMTMT000016GB01Person.AdministrativeGenderCode;
+
+import uk.co.inhealthcare.smsp.client.model.Gender.Type;
+
 import org.hl7.v3.TSNHSTimestampType1;
 import org.hl7.v3.TSNHSTimestampType3;
-
-import uk.co.inhealthcare.smsp.client.services.model.Gender.Type;
 
 public class Person {
 

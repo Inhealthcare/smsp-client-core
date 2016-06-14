@@ -5,12 +5,18 @@ import org.hl7.v3.QUPAMT000005GB01GetPatientDetailsRequestV10Grouper;
 import org.hl7.v3.QUPAMT000005GB01GetPatientDetailsV10;
 import org.hl7.v3.QUPAMT000005GB01GetPatientDetailsV10.Code;
 
-import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.services.model.Gender;
-import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
-import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
-import uk.co.inhealthcare.smsp.client.services.model.Name;
-import uk.co.inhealthcare.smsp.client.services.model.Postcode;
+import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.model.Gender;
+import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.model.Name;
+import uk.co.inhealthcare.smsp.client.model.Postcode;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonDateOfBirthFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonGenderFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonLocalIdentifierFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNHSNumberFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNameFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonPostcodeFactory;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class GetPatientDetailsRequest {
@@ -107,21 +113,21 @@ public class GetPatientDetailsRequest {
 
 		QUPAMT000005GB01GetPatientDetailsRequestV10Grouper event = new QUPAMT000005GB01GetPatientDetailsRequestV10Grouper();
 
-		event.setPersonDateOfBirth(dob.toType5PersonDateOfBirth());
+		event.setPersonDateOfBirth(PersonDateOfBirthFactory.toType5PersonDateOfBirth(dob));
 		if (gender != null) {
-			event.setPersonGender(gender.toType5PersonGender());
+			event.setPersonGender(PersonGenderFactory.toType5PersonGender(gender));
 		}
 		if (local != null) {
-			event.setPersonLocalIdentifier(local.toType5PersonLocalIdentifier());
+			event.setPersonLocalIdentifier(PersonLocalIdentifierFactory.toType5PersonLocalIdentifier(local));
 		}
 		if (name != null) {
-			event.setPersonName(name.toType5PersonName());
+			event.setPersonName(PersonNameFactory.toType5PersonName(name));
 		}
 		if (postcode != null) {
-			event.setPersonPostcode(postcode.toType5PersonPostcode());
+			event.setPersonPostcode(PersonPostcodeFactory.toType5PersonPostcode(postcode));
 		}
 		if (nhsNumber != null) {
-			event.setPersonNHSNumber(nhsNumber.toType5PersonNHSNumber());
+			event.setPersonNHSNumber(PersonNHSNumberFactory.toType5PersonNHSNumber(nhsNumber));
 		}
 
 		details.setQueryEvent(event);

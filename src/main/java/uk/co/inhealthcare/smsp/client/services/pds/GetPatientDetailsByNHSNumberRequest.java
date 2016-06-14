@@ -5,10 +5,14 @@ import org.hl7.v3.QUPAMT000003GB01GetPatientDetailsByNHSNumberRequestV10;
 import org.hl7.v3.QUPAMT000003GB01GetPatientDetailsByNHSNumberRequestV10.Code;
 import org.hl7.v3.QUPAMT000003GB01GetPatientDetailsByNHSNumberRequestV10Grouper;
 
-import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
-import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
-import uk.co.inhealthcare.smsp.client.services.model.Name;
+import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.model.Name;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonDateOfBirthFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonLocalIdentifierFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNHSNumberFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNameFactory;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class GetPatientDetailsByNHSNumberRequest {
@@ -90,13 +94,13 @@ public class GetPatientDetailsByNHSNumberRequest {
 
 		QUPAMT000003GB01GetPatientDetailsByNHSNumberRequestV10Grouper event = new QUPAMT000003GB01GetPatientDetailsByNHSNumberRequestV10Grouper();
 
-		event.setPersonDateOfBirth(dob.toType3PersonDateOfBirth());
+		event.setPersonDateOfBirth(PersonDateOfBirthFactory.toType3PersonDateOfBirth( dob ) );
 		if (local != null) {
-			event.setPersonLocalIdentifier(local.toType3PersonLocalIdentifier());
+			event.setPersonLocalIdentifier(PersonLocalIdentifierFactory.toType3PersonLocalIdentifier(local));
 		}
-		event.setPersonNHSNumber(nhsNumber.toType3PersonNHSNumber());
+		event.setPersonNHSNumber(PersonNHSNumberFactory.toType3PersonNHSNumber(nhsNumber));
 		if (name != null) {
-			event.setPersonName(name.toType3PersonName());
+			event.setPersonName(PersonNameFactory.toType3PersonName(name));
 		}
 
 		details.setQueryEvent(event);

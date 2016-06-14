@@ -6,7 +6,7 @@ import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.ITKRequestMessageBuilder;
 
-public class BaseITKMiniService {
+public abstract class BaseITKMiniService {
 
 	private ITKGateway itkGateway;
 

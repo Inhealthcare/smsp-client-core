@@ -5,11 +5,16 @@ import org.hl7.v3.QUPAMT000004GB01GetPatientDetailsBySearchRequestV10;
 import org.hl7.v3.QUPAMT000004GB01GetPatientDetailsBySearchRequestV10.Code;
 import org.hl7.v3.QUPAMT000004GB01GetPatientDetailsBySearchRequestV10Grouper;
 
-import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.services.model.Gender;
-import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
-import uk.co.inhealthcare.smsp.client.services.model.Name;
-import uk.co.inhealthcare.smsp.client.services.model.Postcode;
+import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.model.Gender;
+import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.model.Name;
+import uk.co.inhealthcare.smsp.client.model.Postcode;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonDateOfBirthFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonGenderFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonLocalIdentifierFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNameFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonPostcodeFactory;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class GetPatientDetailsBySearchRequest {
@@ -102,14 +107,14 @@ public class GetPatientDetailsBySearchRequest {
 
 		QUPAMT000004GB01GetPatientDetailsBySearchRequestV10Grouper event = new QUPAMT000004GB01GetPatientDetailsBySearchRequestV10Grouper();
 
-		event.setPersonDateOfBirth( dob.toType4PersonDateOfBirth() );
-		event.setPersonGender( gender.toType4PersonGender() );
+		event.setPersonDateOfBirth( PersonDateOfBirthFactory.toType4PersonDateOfBirth( dob ) );
+		event.setPersonGender( PersonGenderFactory.toType4PersonGender(gender) );
 		if(local!=null) {
-			event.setPersonLocalIdentifier( local.toType4PersonLocalIdentifier() );
+			event.setPersonLocalIdentifier( PersonLocalIdentifierFactory.toType4PersonLocalIdentifier(local) );
 		}
-		event.setPersonName(name.toType4PersonName());
+		event.setPersonName(PersonNameFactory.toType4PersonName(name));
 		if(postcode!=null) {
-			event.setPersonPostcode(postcode.toType4PersonPostcode());
+			event.setPersonPostcode(PersonPostcodeFactory.toType4PersonPostcode(postcode));
 		}		
 
 		details.setQueryEvent(event);

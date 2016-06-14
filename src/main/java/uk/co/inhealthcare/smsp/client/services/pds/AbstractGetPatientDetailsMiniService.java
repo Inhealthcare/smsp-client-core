@@ -14,7 +14,7 @@ import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.PayloadQuery;
 import uk.co.inhealthcare.smsp.client.services.BaseITKMiniService;
 
-public abstract class AbstractGetPatientDetailsMiniService extends BaseITKMiniService {
+abstract class AbstractGetPatientDetailsMiniService extends BaseITKMiniService {
 
 	public AbstractGetPatientDetailsMiniService(ITKGateway itkGateway) {
 		super(itkGateway);

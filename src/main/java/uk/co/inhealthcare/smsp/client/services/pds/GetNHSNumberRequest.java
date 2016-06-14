@@ -5,11 +5,16 @@ import org.hl7.v3.QUPAMT000002GB01GetNHSNumberRequestV10;
 import org.hl7.v3.QUPAMT000002GB01GetNHSNumberRequestV10.Code;
 import org.hl7.v3.QUPAMT000002GB01GetNHSNumberRequestV10Grouper;
 
-import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.services.model.Gender;
-import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
-import uk.co.inhealthcare.smsp.client.services.model.Name;
-import uk.co.inhealthcare.smsp.client.services.model.Postcode;
+import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.model.Gender;
+import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.model.Name;
+import uk.co.inhealthcare.smsp.client.model.Postcode;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonDateOfBirthFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonGenderFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonLocalIdentifierFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNameFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonPostcodeFactory;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class GetNHSNumberRequest {
@@ -99,14 +104,14 @@ public class GetNHSNumberRequest {
 
 		QUPAMT000002GB01GetNHSNumberRequestV10Grouper event = new QUPAMT000002GB01GetNHSNumberRequestV10Grouper();
 
-		event.setPersonDateOfBirth( dob.toType2PersonDateOfBirth() );
-		event.setPersonGender( gender.toType2PersonGender() );
-		event.setPersonName( name.toType2PersonName() );
+		event.setPersonDateOfBirth( PersonDateOfBirthFactory.toType2PersonDateOfBirth( dob ) );
+		event.setPersonGender( PersonGenderFactory.toType2PersonGender(gender) );
+		event.setPersonName( PersonNameFactory.toType2PersonName(name) );
 		if( local != null ) {
-			event.setPersonLocalIdentifier( local.toType2PersonLocalIdentifier() );
+			event.setPersonLocalIdentifier( PersonLocalIdentifierFactory.toType2PersonLocalIdentifier(local) );
 		}
 		if( postcode != null ) {
-			event.setPersonPostcode( postcode.toPersonPostcode() );
+			event.setPersonPostcode( PersonPostcodeFactory.toPersonPostcode(postcode) );
 		}
 		
 		number.setQueryEvent(event);

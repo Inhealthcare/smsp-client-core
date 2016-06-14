@@ -9,7 +9,7 @@ import org.hl7.v3.COMTMT000013GB01ValidIdentifier;
 import org.hl7.v3.COMTMT000013GB01VerifyNHSNumberResponseV10;
 import org.hl7.v3.IINHSIdentifierType1;
 
-import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.model.NHSNumber;
 
 public class VerifyNHSNumberResponse {
 

@@ -2,11 +2,11 @@ package uk.co.inhealthcare.smsp.client.example;
 
 import uk.co.inhealthcare.smsp.client.Identity;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
-import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.services.model.Gender;
-import uk.co.inhealthcare.smsp.client.services.model.LocalIdentifier;
-import uk.co.inhealthcare.smsp.client.services.model.Name;
-import uk.co.inhealthcare.smsp.client.services.model.Postcode;
+import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.model.Gender;
+import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
+import uk.co.inhealthcare.smsp.client.model.Name;
+import uk.co.inhealthcare.smsp.client.model.Postcode;
 import uk.co.inhealthcare.smsp.client.services.pds.GetNHSNumberMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.GetNHSNumberRequest;
 import uk.co.inhealthcare.smsp.client.services.pds.GetNHSNumberResponse;

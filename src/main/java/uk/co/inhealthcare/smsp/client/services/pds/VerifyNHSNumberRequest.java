@@ -5,9 +5,12 @@ import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10;
 import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10.Code;
 import org.hl7.v3.QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper;
 
-import uk.co.inhealthcare.smsp.client.services.model.DateOfBirth;
-import uk.co.inhealthcare.smsp.client.services.model.NHSNumber;
-import uk.co.inhealthcare.smsp.client.services.model.Name;
+import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
+import uk.co.inhealthcare.smsp.client.model.NHSNumber;
+import uk.co.inhealthcare.smsp.client.model.Name;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonDateOfBirthFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNHSNumberFactory;
+import uk.co.inhealthcare.smsp.client.services.factories.PersonNameFactory;
 import uk.co.inhealthcare.smsp.client.utils.DCEUtils;
 
 public class VerifyNHSNumberRequest {
@@ -80,10 +83,10 @@ public class VerifyNHSNumberRequest {
 		
 		QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper event = new QUPAMT000001GB01VerifyNHSNumberRequestV10Grouper();
 
-		event.setPersonDateOfBirth(this.dob.toType1PersonDateOfBirth());
-		event.setPersonNHSNumber(nhsNumber.toType1PersonNHSNumber());
+		event.setPersonDateOfBirth( PersonDateOfBirthFactory.toType1PersonDateOfBirth( dob ) );
+		event.setPersonNHSNumber( PersonNHSNumberFactory.toType1PersonNHSNumber(nhsNumber));
 		if (name != null) {
-			event.setPersonName(name.toType1PersonName());
+			event.setPersonName(PersonNameFactory.toType1PersonName(name));
 		}
 
 		verify.setQueryEvent(event);
