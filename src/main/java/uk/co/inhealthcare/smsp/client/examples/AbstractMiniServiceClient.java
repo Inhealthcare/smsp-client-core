@@ -1,24 +1,24 @@
 package uk.co.inhealthcare.smsp.client.examples;
 
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
 
 public abstract class AbstractMiniServiceClient implements MiniServiceClient {
 
 	protected ITKGateway itkGateway;
-	protected Identity identity;
+	protected RequestContext context;
 
-	public AbstractMiniServiceClient(ITKGateway itkGateway, Identity identity) {
+	public AbstractMiniServiceClient(ITKGateway itkGateway, RequestContext context) {
 		this.itkGateway = itkGateway;
-		this.identity = identity;
+		this.context = context;
 	}
 
 	@Override
 	public void run() throws MiniServiceException {
-		runClient(itkGateway, identity);
+		runClient(itkGateway, context);
 	}
 
-	protected abstract void runClient(ITKGateway itkGateway, Identity identity) throws MiniServiceException;
+	protected abstract void runClient(ITKGateway itkGateway, RequestContext context) throws MiniServiceException;
 
 }

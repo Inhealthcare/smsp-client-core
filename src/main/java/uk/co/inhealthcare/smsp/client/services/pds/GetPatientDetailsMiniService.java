@@ -1,7 +1,7 @@
 package uk.co.inhealthcare.smsp.client.services.pds;
 
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 
 public class GetPatientDetailsMiniService extends AbstractGetPatientDetailsMiniService {
 
@@ -11,10 +11,10 @@ public class GetPatientDetailsMiniService extends AbstractGetPatientDetailsMiniS
 		super(itkGateway);
 	}
 
-	public GetPatientDetailsResponse getPatientDetails(Identity identity,
+	public GetPatientDetailsResponse getPatientDetails(RequestContext context,
 			GetPatientDetailsRequest getPatientDetailsRequest) throws MiniServiceException {
 
-		return getPatientDetails(GET_PATIENT_DETAILS_SERVICE, getPatientDetailsRequest.toServiceRequest(), identity);
+		return getPatientDetails(GET_PATIENT_DETAILS_SERVICE, getPatientDetailsRequest.toServiceRequest(), context);
 
 	}
 

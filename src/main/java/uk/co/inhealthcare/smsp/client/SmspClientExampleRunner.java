@@ -1,11 +1,11 @@
 package uk.co.inhealthcare.smsp.client;
 
 import uk.co.inhealthcare.smsp.client.examples.ExampleClientFactory;
-import uk.co.inhealthcare.smsp.client.examples.MiniServiceClient;
 import uk.co.inhealthcare.smsp.client.examples.ExampleClientFactory.Service;
+import uk.co.inhealthcare.smsp.client.examples.MiniServiceClient;
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.itk.SOAPITKGateway;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
 import uk.co.inhealthcare.smsp.client.soap.SOAPConnection;
 import uk.co.inhealthcare.smsp.client.soap.SimpleSOAPMessageFactory;
@@ -40,11 +40,11 @@ public class SmspClientExampleRunner {
 		// soap
 		ITKGateway itkGateway = new SOAPITKGateway(soapSender, factory);
 
-		// create the identity object
-		Identity identity = options.createIdentity();
+		// create the request context object
+		RequestContext context = options.createContext();
 
 		// get an example client
-		ExampleClientFactory clients = new ExampleClientFactory(itkGateway, identity);
+		ExampleClientFactory clients = new ExampleClientFactory(itkGateway, context);
 		MiniServiceClient client = clients.forService(Service.valueOf(options.getService()));
 		try {
 			client.run();

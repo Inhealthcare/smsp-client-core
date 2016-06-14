@@ -4,7 +4,7 @@ import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
 import uk.co.inhealthcare.smsp.client.model.NHSNumber;
 import uk.co.inhealthcare.smsp.client.model.Name;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsByNHSNumberMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsByNHSNumberRequest;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsResponse;
@@ -17,12 +17,12 @@ public class GetPatientDetailsByNHSNumberMiniServiceClient extends AbstractGetPa
 	private static final String EXAMPLE_GIVEN_NAME = "LAURENCE";
 	private static final String EXAMPLE_FAMILY_NAME = "LANGAN";
 
-	public GetPatientDetailsByNHSNumberMiniServiceClient(ITKGateway itkGateway, Identity identity) {
-		super(itkGateway, identity);
+	public GetPatientDetailsByNHSNumberMiniServiceClient(ITKGateway itkGateway, RequestContext context) {
+		super(itkGateway, context);
 	}
 
 	@Override
-	protected void runClient(ITKGateway itkGateway, Identity identity) throws MiniServiceException {
+	protected void runClient(ITKGateway itkGateway, RequestContext context) throws MiniServiceException {
 
 		// create the get nhs number service
 		GetPatientDetailsByNHSNumberMiniService service = new GetPatientDetailsByNHSNumberMiniService(itkGateway);
@@ -31,7 +31,7 @@ public class GetPatientDetailsByNHSNumberMiniServiceClient extends AbstractGetPa
 		GetPatientDetailsByNHSNumberRequest request = createRequest();
 
 		// invoke the service
-		GetPatientDetailsResponse response = service.getPatientDetailsByNHSNumber(identity, request);
+		GetPatientDetailsResponse response = service.getPatientDetailsByNHSNumber(context, request);
 
 		// handle response
 		handleResponse(response);

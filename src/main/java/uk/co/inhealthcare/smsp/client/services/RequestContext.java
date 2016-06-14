@@ -2,14 +2,14 @@ package uk.co.inhealthcare.smsp.client.services;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class Identity {
+public class RequestContext {
 
 	private String username;
 	private String auditIdentity;
 	private String clientServiceUrl;
 	private String serviceUrl;
 
-	public Identity(String username, String auditIdentity, String clientServiceUrl, String serviceUrl) {
+	public RequestContext(String username, String auditIdentity, String clientServiceUrl, String serviceUrl) {
 		if (StringUtils.isBlank(username))
 			throw new IllegalArgumentException("Cannot have a blank username");
 		if (StringUtils.isBlank(auditIdentity))

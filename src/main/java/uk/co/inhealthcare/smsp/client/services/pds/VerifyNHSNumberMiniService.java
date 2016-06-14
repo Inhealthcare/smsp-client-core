@@ -12,7 +12,7 @@ import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.PayloadQuery;
 import uk.co.inhealthcare.smsp.client.services.BaseITKMiniService;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 
 public class VerifyNHSNumberMiniService extends BaseITKMiniService {
 
@@ -22,13 +22,13 @@ public class VerifyNHSNumberMiniService extends BaseITKMiniService {
 		super(itkGateway);
 	}
 
-	public VerifyNHSNumberResponse verifyNhsNumber(Identity identity, VerifyNHSNumberRequest verifyNHSNumberRequest)
+	public VerifyNHSNumberResponse verifyNhsNumber(RequestContext context, VerifyNHSNumberRequest verifyNHSNumberRequest)
 			throws MiniServiceException {
 
 		try {
 
 			// create the request
-			ITKMessage request = createITKMessageBuilder(new ITKHeaders(VERIFY_NHS_NUMBER_SERVICE, identity))
+			ITKMessage request = createITKMessageBuilder(new ITKHeaders(VERIFY_NHS_NUMBER_SERVICE, context))
 					.addPayload(verifyNHSNumberRequest.toServiceRequest()).build();
 
 			// send the request

@@ -12,7 +12,7 @@ import uk.co.inhealthcare.smsp.client.itk.ITKHeaders;
 import uk.co.inhealthcare.smsp.client.itk.ITKMessage;
 import uk.co.inhealthcare.smsp.client.itk.PayloadQuery;
 import uk.co.inhealthcare.smsp.client.services.BaseITKMiniService;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 
 abstract class AbstractGetPatientDetailsMiniService extends BaseITKMiniService {
 
@@ -21,11 +21,11 @@ abstract class AbstractGetPatientDetailsMiniService extends BaseITKMiniService {
 	}
 
 	public GetPatientDetailsResponse getPatientDetails(String serviceName, ServiceRequest serviceRequest,
-			Identity identity) throws MiniServiceException {
+			RequestContext context) throws MiniServiceException {
 		try {
 
 			// create the request
-			ITKMessage request = createITKMessageBuilder(new ITKHeaders(serviceName, identity))
+			ITKMessage request = createITKMessageBuilder(new ITKHeaders(serviceName, context))
 					.addPayload(serviceRequest).build();
 
 			// send the request

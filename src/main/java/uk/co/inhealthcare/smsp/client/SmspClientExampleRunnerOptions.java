@@ -2,7 +2,7 @@ package uk.co.inhealthcare.smsp.client;
 
 import org.apache.commons.lang3.StringUtils;
 
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.soap.http.KeyStore;
 
 public class SmspClientExampleRunnerOptions {
@@ -18,47 +18,62 @@ public class SmspClientExampleRunnerOptions {
 	private static final String LOG_TRAFFIC_PROPERTY = "logTraffic";
 	private static final String SERVICE_PROPERTY = "service";
 
+	// field values
+	private Boolean logTraffic;
+	private String service;
+	private String username;
+	private String clientServiceUrl;
+	private String auditIdentity;
+	private String sslKeystoreLocation;
+	private String sslKeystorePassword;
+	private Boolean sslDebug;
+	private String serviceUrl;
+
 	public SmspClientExampleRunnerOptions(String[] args) {
-		// TODO Auto-generated constructor stub
+
+		serviceUrl = System.getProperty(SERVICE_URL_PROPERTY);
+		if (StringUtils.isBlank(serviceUrl))
+			throw new IllegalArgumentException("Must define a service url. -DserviceUrl=https://{url}/itk");
+
+		logTraffic = Boolean.valueOf(System.getProperty(LOG_TRAFFIC_PROPERTY));
+		service = System.getProperty(SERVICE_PROPERTY);
+		username = System.getProperty(USERNAME_PROPERTY);
+		clientServiceUrl = System.getProperty(CLIENT_SERVICE_URL_PROPERTY);
+		auditIdentity = System.getProperty(AUDIT_IDENTITY_PROPERTY);
+		sslKeystoreLocation = System.getProperty(SSL_KEYSTORE_LOCATION_PROPERTY);
+		sslKeystorePassword = System.getProperty(SSL_KEYSTORE_PASSWORD_PROPERTY);
+		sslDebug = Boolean.valueOf(System.getProperty(SSL_DEBUG_PROPERTY));
+		
 	}
 
 	public String getService() {
-		return System.getProperty(SERVICE_PROPERTY);
+		return service;
 	}
 
 	public boolean isLogTraffic() {
-		return Boolean.valueOf(System.getProperty(LOG_TRAFFIC_PROPERTY));
+		return logTraffic;
 	}
 
-	public Identity createIdentity() {
-		String username = System.getProperty(USERNAME_PROPERTY);
-		String clientServiceUrl = System.getProperty(CLIENT_SERVICE_URL_PROPERTY);
-		String auditIdentity = System.getProperty(AUDIT_IDENTITY_PROPERTY);
-		return new Identity(username, auditIdentity, clientServiceUrl, getServiceUrl());
+	public RequestContext createContext() {
+		return new RequestContext(username, auditIdentity, clientServiceUrl, serviceUrl);
 	}
 
 	public KeyStore createKeyStore() {
-		String sslKeystoreLocation = System.getProperty(SSL_KEYSTORE_LOCATION_PROPERTY);
-		String sslKeystorePassword = System.getProperty(SSL_KEYSTORE_PASSWORD_PROPERTY);
-		if (sslConfigured(sslKeystoreLocation, sslKeystorePassword)) {
+		if (sslConfigured()) {
 			return new KeyStore(sslKeystoreLocation, sslKeystorePassword);
 		}
 		return null;
 	}
 
 	public Boolean isSSLDebug() {
-		return Boolean.valueOf(System.getProperty(SSL_DEBUG_PROPERTY));
+		return sslDebug;
 	}
 
 	public String getServiceUrl() {
-		String serviceUrl = System.getProperty(SERVICE_URL_PROPERTY);
-		if (StringUtils.isBlank(serviceUrl))
-			throw new IllegalArgumentException("Must define a service url. -DserviceUrl=https://{url}/itk");
 		return serviceUrl;
 	}
 
-
-	public boolean sslConfigured(String sslKeystoreLocation, String sslKeystorePassword) {
+	public boolean sslConfigured() {
 		return StringUtils.isNotBlank(sslKeystoreLocation) && StringUtils.isNotBlank(sslKeystorePassword);
 	}
 

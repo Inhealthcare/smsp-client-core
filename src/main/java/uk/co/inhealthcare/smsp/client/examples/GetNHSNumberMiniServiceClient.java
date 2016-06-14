@@ -6,7 +6,7 @@ import uk.co.inhealthcare.smsp.client.model.Gender;
 import uk.co.inhealthcare.smsp.client.model.LocalIdentifier;
 import uk.co.inhealthcare.smsp.client.model.Name;
 import uk.co.inhealthcare.smsp.client.model.Postcode;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.services.pds.GetNHSNumberMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.GetNHSNumberRequest;
 import uk.co.inhealthcare.smsp.client.services.pds.GetNHSNumberResponse;
@@ -21,12 +21,12 @@ public class GetNHSNumberMiniServiceClient extends AbstractMiniServiceClient {
 	private static final String EXAMPLE_GIVEN_NAME = "Dave";
 	private static final String EXAMPLE_FAMILY_NAME = "Smith";
 
-	public GetNHSNumberMiniServiceClient(ITKGateway itkGateway, Identity identity) {
-		super(itkGateway, identity);
+	public GetNHSNumberMiniServiceClient(ITKGateway itkGateway, RequestContext context) {
+		super(itkGateway, context);
 	}
 
 	@Override
-	protected void runClient(ITKGateway itkGateway, Identity identity) throws MiniServiceException {
+	protected void runClient(ITKGateway itkGateway, RequestContext context) throws MiniServiceException {
 
 		// create the get nhs number service
 		GetNHSNumberMiniService service = new GetNHSNumberMiniService(itkGateway);
@@ -35,7 +35,7 @@ public class GetNHSNumberMiniServiceClient extends AbstractMiniServiceClient {
 		GetNHSNumberRequest request = createRequest();
 
 		// invoke the service
-		GetNHSNumberResponse response = service.getNhsNumber(identity, request);
+		GetNHSNumberResponse response = service.getNhsNumber(context, request);
 
 		// handle response
 		handleResponse(response);

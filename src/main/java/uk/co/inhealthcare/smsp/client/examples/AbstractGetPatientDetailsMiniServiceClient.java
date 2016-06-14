@@ -1,13 +1,13 @@
 package uk.co.inhealthcare.smsp.client.examples;
 
 import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsResponse;
 
 public abstract class AbstractGetPatientDetailsMiniServiceClient extends AbstractMiniServiceClient {
 
-	public AbstractGetPatientDetailsMiniServiceClient(ITKGateway itkGateway, Identity identity) {
-		super(itkGateway, identity);
+	public AbstractGetPatientDetailsMiniServiceClient(ITKGateway itkGateway, RequestContext context) {
+		super(itkGateway, context);
 	}
 
 	protected void handleResponse(GetPatientDetailsResponse response) {

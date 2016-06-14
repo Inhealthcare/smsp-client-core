@@ -6,7 +6,7 @@ import uk.co.inhealthcare.smsp.client.model.Gender;
 import uk.co.inhealthcare.smsp.client.model.Name;
 import uk.co.inhealthcare.smsp.client.model.Postcode;
 import uk.co.inhealthcare.smsp.client.model.Gender.Type;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsBySearchMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsBySearchRequest;
 import uk.co.inhealthcare.smsp.client.services.pds.GetPatientDetailsResponse;
@@ -19,12 +19,12 @@ public class GetPatientDetailsBySearchMiniServiceClient extends AbstractGetPatie
 	private static final String EXAMPLE_GIVEN_NAME = "Old";
 	private static final String EXAMPLE_FAMILY_NAME = "History";
 
-	public GetPatientDetailsBySearchMiniServiceClient(ITKGateway itkGateway, Identity identity) {
-		super(itkGateway, identity);
+	public GetPatientDetailsBySearchMiniServiceClient(ITKGateway itkGateway, RequestContext context) {
+		super(itkGateway, context);
 	}
 
 	@Override
-	protected void runClient(ITKGateway itkGateway, Identity identity) throws MiniServiceException {
+	protected void runClient(ITKGateway itkGateway, RequestContext context) throws MiniServiceException {
 
 		// create the get nhs number service
 		GetPatientDetailsBySearchMiniService service = new GetPatientDetailsBySearchMiniService(itkGateway);
@@ -33,7 +33,7 @@ public class GetPatientDetailsBySearchMiniServiceClient extends AbstractGetPatie
 		GetPatientDetailsBySearchRequest request = createRequest();
 
 		// invoke the service
-		GetPatientDetailsResponse response = service.getPatientDetailsBySearch(identity, request);
+		GetPatientDetailsResponse response = service.getPatientDetailsBySearch(context, request);
 
 		// handle response
 		handleResponse(response);

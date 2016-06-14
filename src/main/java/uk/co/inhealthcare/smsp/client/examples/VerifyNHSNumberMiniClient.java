@@ -4,7 +4,7 @@ import uk.co.inhealthcare.smsp.client.itk.ITKGateway;
 import uk.co.inhealthcare.smsp.client.model.DateOfBirth;
 import uk.co.inhealthcare.smsp.client.model.NHSNumber;
 import uk.co.inhealthcare.smsp.client.model.Name;
-import uk.co.inhealthcare.smsp.client.services.Identity;
+import uk.co.inhealthcare.smsp.client.services.RequestContext;
 import uk.co.inhealthcare.smsp.client.services.pds.MiniServiceException;
 import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberMiniService;
 import uk.co.inhealthcare.smsp.client.services.pds.VerifyNHSNumberRequest;
@@ -17,12 +17,12 @@ public class VerifyNHSNumberMiniClient extends AbstractMiniServiceClient {
 	private final static String EXAMPLE_NHS_NUMBER = "5552448715";
 	private final static String EXAMPLE_DOB = "19881123";
 
-	public VerifyNHSNumberMiniClient(ITKGateway itkGateway, Identity identity) {
-		super(itkGateway, identity);
+	public VerifyNHSNumberMiniClient(ITKGateway itkGateway, RequestContext context) {
+		super(itkGateway, context);
 	}
 
 	@Override
-	protected void runClient(ITKGateway itkGateway, Identity identity) throws MiniServiceException {
+	protected void runClient(ITKGateway itkGateway, RequestContext context) throws MiniServiceException {
 
 		// create the verify nhs number service
 		VerifyNHSNumberMiniService service = new VerifyNHSNumberMiniService(itkGateway);
@@ -31,7 +31,7 @@ public class VerifyNHSNumberMiniClient extends AbstractMiniServiceClient {
 		VerifyNHSNumberRequest request = createRequest();
 
 		// invoke the service
-		VerifyNHSNumberResponse response = service.verifyNhsNumber(identity, request);
+		VerifyNHSNumberResponse response = service.verifyNhsNumber(context, request);
 
 		// handle response
 		handleResponse(response);
