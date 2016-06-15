@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
@@ -174,7 +175,16 @@ public class SOAPITKGatewayTest {
 		}
 
 		private SOAPMessage createResponse() throws SOAPException {
-			return soapMessageFactory.createFrom(SOAPITKGateway.class.getResourceAsStream("soap.xml"));
+			try {
+				InputStream resourceAsStream = SOAPITKGateway.class
+						.getResourceAsStream("/uk/co/inhealthcare/smsp/client/itk/soap.xml");
+				if (resourceAsStream == null) {
+					throw new Exception("Null response resource");
+				}
+				return soapMessageFactory.createFrom(resourceAsStream);
+			} catch (Exception e) {
+				throw new SOAPException("Could not find response file");
+			}
 		}
 
 		public SOAPMessage getCapturedMessage() {
