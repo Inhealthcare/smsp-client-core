@@ -1,0 +1,40 @@
+<soap:Envelope xmlns:itk="urn:nhs-itk:ns:201005" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:wsa="http://www.w3.org/2005/08/addressing">
+   <soap:Header>
+      <wsa:MessageID>4BEEA412-5FFA-48CC-A658-1236E0BC61C9</wsa:MessageID>
+      <wsa:Action>urn:nhs-itk:services:201005:verifyNHSNumber-v1-0Response</wsa:Action>
+      <wsa:To/>
+   </soap:Header>
+   <soap:Body>
+      <itk:DistributionEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+         <itk:header service="urn:nhs-itk:services:201005:verifyNHSNumber-v1-0Response" trackingid="0F8228B0-E251-40E2-82B5-88DF393FB0C5">
+            <itk:auditIdentity>
+               <itk:id uri="urn:nhs-uk:identity:inhealthcare:smsp2:vnn"/>
+            </itk:auditIdentity>
+            <itk:manifest count="1">
+               <itk:manifestitem id="uuid_1AC2CB5C-8E94-4024-8C9E-548BB7B3CAF5" mimetype="text/xml" profileid="urn:nhs-en:profile:verifyNHSNumberResponse-v1-0"/>
+            </itk:manifest>
+            <itk:senderAddress uri="urn:nhs-uk:addrssing:ods:INHC:SMSP"/>
+         </itk:header>
+         <itk:payloads count="1">
+            <itk:payload id="uuid_1AC2CB5C-8E94-4024-8C9E-548BB7B3CAF5">
+               <verifyNHSNumberResponse-v1-0 classCode="OBS" moodCode="EVN" xmlns="urn:hl7-org:v3">
+                  <id root="7C81FCC1-E13A-4615-8DC6-B1E435BA0472"/>
+                  <code code="verifyNHSNumberResponse-v1-0" codeSystem="2.16.840.1.113883.2.1.3.2.4.17.284"/>
+                  <value code="SMSP-0000" codeSystem="2.16.840.1.113883.2.1.3.2.4.17.285"/>
+                  <component typeCode="COMP">
+                     <validIdentifier classCode="OBS" moodCode="EVN">
+                        <code code="VI" codeSystem="2.16.840.1.113883.2.1.3.2.4.17.287"/>
+                        <value value="true"/>
+                        <subject typeCode="SBJ">
+                           <patient classCode="PAT">
+                              <id extension="9449310092" root="2.16.840.1.113883.2.1.4.1"/>
+                           </patient>
+                        </subject>
+                     </validIdentifier>
+                  </component>
+               </verifyNHSNumberResponse-v1-0>
+            </itk:payload>
+         </itk:payloads>
+      </itk:DistributionEnvelope>
+   </soap:Body>
+</soap:Envelope>

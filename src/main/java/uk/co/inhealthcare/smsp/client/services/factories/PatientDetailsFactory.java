@@ -2,6 +2,7 @@ package uk.co.inhealthcare.smsp.client.services.factories;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
@@ -21,9 +22,12 @@ import org.hl7.v3.EnGiven;
 import org.hl7.v3.EnPrefix;
 import org.hl7.v3.II;
 import org.hl7.v3.IINHSIdentifierType3;
+import org.hl7.v3.IVLINT.High;
+import org.hl7.v3.IVLINT.Low;
 import org.hl7.v3.IVLTS;
 import org.hl7.v3.ON;
 import org.hl7.v3.PNNHSPersonNameType2;
+import org.hl7.v3.QTY;
 import org.hl7.v3.TEL;
 import org.hl7.v3.TSNHSTimestampType1;
 import org.hl7.v3.TSNHSTimestampType3;
@@ -123,19 +127,31 @@ public class PatientDetailsFactory {
 			uses.addAll(use);
 		}
 
-		List<IVLTS> useablePeriod = tel.getUseablePeriod();
-		if (useablePeriod != null) {
-			for (IVLTS ivlts : useablePeriod) {
-				useablePeriods.add(toUseable(ivlts));
-			}
+		List<IVLTS> ivltss = tel.getUseablePeriod();
+		if (ivltss != null) {
+			useablePeriods.addAll(toUseable(ivltss));
+
 		}
 
 		return new Communication(uses, value, useablePeriods);
 	}
 
-	private static UseablePeriod toUseable(IVLTS ivlts) {
-		// TODO
-		return new UseablePeriod();
+	private static Collection<? extends UseablePeriod> toUseable(List<IVLTS> ivltss) {
+		List<UseablePeriod> periods = new ArrayList<>();
+		for (IVLTS ivlts : ivltss) {
+			List<JAXBElement<? extends QTY>> rests = ivlts.getRest();
+			if (rests != null) {
+				for (JAXBElement<? extends QTY> jaxbElement : rests) {
+					QTY value = jaxbElement.getValue();
+					if (value instanceof Low) {
+						periods.add(new UseablePeriod(UseablePeriod.Type.Low, ((Low) value).getValue()));
+					} else if (value instanceof High) {
+						periods.add(new UseablePeriod(UseablePeriod.Type.High, ((High) value).getValue()));
+					}
+				}
+			}
+		}
+		return periods;
 	}
 
 	public static Person toPerson(COMTMT000016GB01Person person) {
@@ -144,7 +160,6 @@ public class PatientDetailsFactory {
 		DateOfBirth dateOfBirth = null;
 		String deceasedOn = null;
 		GPPractice gp = null;
-		
 
 		AdministrativeGenderCode genderCode = person.getAdministrativeGenderCode();
 		if (genderCode != null) {
@@ -169,8 +184,8 @@ public class PatientDetailsFactory {
 			gp = PatientDetailsFactory.toGPPractice(practice);
 
 		}
-		
-		return new Person( gender, dateOfBirth, deceasedOn, gp );
+
+		return new Person(gender, dateOfBirth, deceasedOn, gp);
 
 	}
 
@@ -179,7 +194,7 @@ public class PatientDetailsFactory {
 		Address address = null;
 		Communication communication = null;
 		Organisation organisation = null;
-		
+
 		ADNHSAddressType2 addr = practice.getAddr();
 		if (addr != null) {
 			address = toAddress(addr);
@@ -198,7 +213,7 @@ public class PatientDetailsFactory {
 			organisation = toOrganisation(org);
 
 		}
-		
+
 		return new GPPractice(address, communication, organisation);
 
 	}
@@ -208,18 +223,17 @@ public class PatientDetailsFactory {
 		String orgId = null;
 		String name = null;
 
+		IINHSIdentifierType3 id = org.getId();
+		if (id != null) {
+			orgId = id.getExtension();
+		}
 
-			IINHSIdentifierType3 id = org.getId();
-			if (id != null) {
-				orgId = id.getExtension();
-			}
+		ON on = org.getName();
+		if (on != null) {
+			name = MessageUtils.stringValueOf(on.getContent());
+		}
 
-			ON on = org.getName();
-			if (on != null) {
-				name = MessageUtils.stringValueOf(on.getContent());
-			}
-			
-			return new Organisation( orgId, name );
+		return new Organisation(orgId, name);
 
 	}
 

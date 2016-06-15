@@ -9,7 +9,7 @@ import javax.xml.bind.JAXBElement;
 import itk.nhs.ns._201005.DistributionEnvelopeType;
 import itk.nhs.ns._201005.PayloadType;
 
-public class AbstractITKMessage implements ITKMessage {
+class AbstractITKMessage implements ITKMessage {
 	
 	private JAXBElement<DistributionEnvelopeType> distributionEnvelope;
 	private ITKHeaders headers;
