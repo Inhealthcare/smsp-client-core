@@ -176,8 +176,7 @@ public class SOAPITKGatewayTest {
 
 		private SOAPMessage createResponse() throws SOAPException {
 			try {
-				InputStream resourceAsStream = SOAPITKGateway.class
-						.getResourceAsStream("/uk/co/inhealthcare/smsp/client/itk/soap.xml");
+				InputStream resourceAsStream = SOAPITKGatewayTest.class.getResourceAsStream("./soap.xml");
 				if (resourceAsStream == null) {
 					throw new Exception("Null response resource");
 				}
