@@ -132,17 +132,7 @@
 	            <version>2.5.3</version>
 	            <configuration>
 	                <autoVersionSubmodules>true</autoVersionSubmodules>
-       				<providerImplementations>
-           				<git>jgit</git>
-       				</providerImplementations>
        			</configuration>
-       			<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.scm</groupId>
-						<artifactId>maven-scm-provider-jgit</artifactId>
-						<version>1.9.4</version>
-					</dependency>
-		         </dependencies>
 	        </plugin>
 
 		</plugins>
