@@ -13,6 +13,8 @@
 		<release.repo.url>http://repo.url</release.repo.url>
 		<snapshot.repo.id>repo-id</snapshot.repo.id>
 		<snapshot.repo.url>http://repo.url</snapshot.repo.url>
+		<github.username></github.username>
+		<github.password></github.password>
 	</properties>
 
 	<dependencies>
@@ -140,7 +142,7 @@
 	</build>
 	
 	<scm>
-		<developerConnection>scm:git:https://github.com/Inhealthcare/smsp-client-core.git</developerConnection>
+		<developerConnection>https://${github.username}:${github.password}@github.com/Inhealthcare/smsp-client-core.git</developerConnection>
 	</scm>
 	
 	
