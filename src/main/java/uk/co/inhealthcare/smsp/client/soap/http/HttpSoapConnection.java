@@ -66,7 +66,7 @@ public class HttpSoapConnection implements SOAPConnection {
 			return this;
 		}
 
-		public Builder requestInterceptor(HttpResponseInterceptor response) {
+		public Builder responseInterceptor(HttpResponseInterceptor response) {
 			responseInterceptors.add(response);
 			return this;
 		}
