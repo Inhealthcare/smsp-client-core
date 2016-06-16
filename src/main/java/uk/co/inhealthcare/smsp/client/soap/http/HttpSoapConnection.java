@@ -2,6 +2,8 @@ package uk.co.inhealthcare.smsp.client.soap.http;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
@@ -37,6 +39,8 @@ public class HttpSoapConnection implements SOAPConnection {
 		private boolean logTraffic = false;
 		private SOAPMessageFactory factory;
 		public boolean disableCompression = false;
+		private List<HttpRequestInterceptor> requestInterceptors = new ArrayList<>();
+		private List<HttpResponseInterceptor> responseInterceptors = new ArrayList<>();
 
 		public Builder(String serviceUrl, SOAPMessageFactory factory) {
 			this.serviceUrl = serviceUrl;
@@ -54,6 +58,16 @@ public class HttpSoapConnection implements SOAPConnection {
 
 		public Builder useSSL(KeyStore keyStore) {
 			this.keyStore = keyStore;
+			return this;
+		}
+
+		public Builder requestInterceptor(HttpRequestInterceptor request) {
+			requestInterceptors.add(request);
+			return this;
+		}
+
+		public Builder requestInterceptor(HttpResponseInterceptor response) {
+			responseInterceptors.add(response);
 			return this;
 		}
 
@@ -79,10 +93,25 @@ public class HttpSoapConnection implements SOAPConnection {
 			clientBuilder.setSSLSocketFactory(keyStore.createSSLSocketFactory());
 		}
 
-		MessageLoggerInterceptor logger = new MessageLoggerInterceptor();
-		httpClient = clientBuilder.addInterceptorFirst(new RemoveSoapHeadersInterceptor())
+		HttpTrafficLoggerInterceptor logger = new HttpTrafficLoggerInterceptor();
+		BufferEntityInterceptor bufferEntityInterceptor = new BufferEntityInterceptor();
+
+		clientBuilder.addInterceptorFirst((HttpRequestInterceptor) bufferEntityInterceptor)
+				.addInterceptorFirst((HttpResponseInterceptor) bufferEntityInterceptor);
+
+		for (HttpRequestInterceptor inter : builder.requestInterceptors) {
+			clientBuilder.addInterceptorFirst(inter);
+		}
+
+		for (HttpResponseInterceptor inter : builder.responseInterceptors) {
+			clientBuilder.addInterceptorFirst(inter);
+		}
+
+		clientBuilder.addInterceptorFirst(new RemoveSoapHeadersInterceptor())
 				.addInterceptorLast((HttpRequestInterceptor) logger)
-				.addInterceptorFirst((HttpResponseInterceptor) logger).build();
+				.addInterceptorFirst((HttpResponseInterceptor) logger);
+
+		httpClient = clientBuilder.build();
 
 	}
 
@@ -91,31 +120,34 @@ public class HttpSoapConnection implements SOAPConnection {
 		return new SOAPClient() {
 
 			@Override
-			public SOAPMessage send(SOAPMessage requestMessage) throws SOAPException {
+			public SOAPMessage send(SOAPMessage soapRequest) throws SOAPException {
 
 				try {
 
 					HttpPost httpPost = new HttpPost(serviceUrl);
 					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					requestMessage.writeTo(out);
+					soapRequest.writeTo(out);
 					httpPost.setEntity(new ByteArrayEntity(out.toByteArray(), ContentType.TEXT_XML));
 
 					HttpContext context = HttpClientContext.create();
-					context.setAttribute(MessageLoggerInterceptor.LOGGER_ATTRIBUTE_NAME, new MessageLogger());
-					context.setAttribute(MessageLoggerInterceptor.ENABLE_LOGGING_ATTRIBUTE_NAME, Boolean.valueOf(logTraffic));
 
-					CloseableHttpResponse response1 = httpClient.execute(httpPost, context);
+					// log http traffic
+					context.setAttribute(HttpTrafficLoggerInterceptor.ENABLE_LOGGING_ATTRIBUTE_NAME,
+							Boolean.valueOf(logTraffic));
+
+					CloseableHttpResponse response = httpClient.execute(httpPost, context);
 					try {
 
-						HttpEntity entity1 = response1.getEntity();
+						HttpEntity entity = response.getEntity();
 
-						SOAPMessage message = factory.createFrom(entity1.getContent());
+						SOAPMessage soapResponse = factory.createFrom(entity.getContent());
 
-						EntityUtils.consume(entity1);
+						EntityUtils.consume(entity);
 
-						return message;
+						return soapResponse;
+
 					} finally {
-						response1.close();
+						response.close();
 					}
 
 				} catch (IOException e) {

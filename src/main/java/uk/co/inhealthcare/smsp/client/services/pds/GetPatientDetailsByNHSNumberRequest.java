@@ -72,6 +72,22 @@ public class GetPatientDetailsByNHSNumberRequest {
 		generateServiceRequest();
 
 	}
+	
+	public DateOfBirth getDob() {
+		return dob;
+	}
+	
+	public Name getName() {
+		return name;
+	}
+	
+	public NHSNumber getNhsNumber() {
+		return nhsNumber;
+	}
+	
+	public LocalIdentifier getLocal() {
+		return local;
+	}
 
 	public ServiceRequest toServiceRequest() {
 		return serviceRequest;

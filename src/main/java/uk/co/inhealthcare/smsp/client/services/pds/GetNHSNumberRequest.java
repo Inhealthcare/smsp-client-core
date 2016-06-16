@@ -82,6 +82,26 @@ public class GetNHSNumberRequest {
 		generateServiceRequest();
 
 	}
+	
+	public DateOfBirth getDob() {
+		return dob;
+	}
+	
+	public Gender getGender() {
+		return gender;
+	}
+	
+	public LocalIdentifier getLocal() {
+		return local;
+	}
+		
+	public Name getName() {
+		return name;
+	}
+	
+	public Postcode getPostcode() {
+		return postcode;
+	}
 
 	public ServiceRequest toServiceRequest() {
 		return serviceRequest;

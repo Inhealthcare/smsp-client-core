@@ -9,17 +9,15 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.protocol.HttpContext;
 
-public class MessageLoggerInterceptor implements HttpRequestInterceptor, HttpResponseInterceptor {
+public class HttpTrafficLoggerInterceptor implements HttpRequestInterceptor, HttpResponseInterceptor {
 
-	protected static final String LOGGER_ATTRIBUTE_NAME = "messageLogger";
 	protected static final String ENABLE_LOGGING_ATTRIBUTE_NAME = "enableLogging";
-	
+	private HttpTrafficLogger logger = new HttpTrafficLogger();
 
 	@Override
 	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
 		Boolean enableLogging = (Boolean) context.getAttribute(ENABLE_LOGGING_ATTRIBUTE_NAME);
 		if (enableLogging != null && enableLogging) {
-			MessageLogger logger = (MessageLogger) context.getAttribute(LOGGER_ATTRIBUTE_NAME);
 			logger.logRequest(request);
 		}
 	}
@@ -28,7 +26,6 @@ public class MessageLoggerInterceptor implements HttpRequestInterceptor, HttpRes
 	public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
 		Boolean enableLogging = (Boolean) context.getAttribute(ENABLE_LOGGING_ATTRIBUTE_NAME);
 		if (enableLogging != null && enableLogging) {
-			MessageLogger logger = (MessageLogger) context.getAttribute(LOGGER_ATTRIBUTE_NAME);
 			logger.logResponse(response);
 		}
 	}
