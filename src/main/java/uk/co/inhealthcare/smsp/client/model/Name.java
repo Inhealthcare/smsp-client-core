@@ -52,7 +52,7 @@ public class Name {
 	private String prefix;
 
 	private Name(Builder builder) {
-		if (builder.given.isEmpty() || StringUtils.isBlank(builder.family))
+		if (builder.given.isEmpty() && StringUtils.isBlank(builder.family))
 			throw new IllegalArgumentException("Name requires a given or family part");
 		this.family = builder.family;
 		this.given.addAll(builder.given);

@@ -6,11 +6,11 @@ import org.apache.http.HttpResponse;
 public class HttpTrafficLogger {
 
 	public void logRequest(HttpRequest request) {
-		HttpFormatterUtils.format(request, System.out);
+		HttpFormatterUtils.format(request, System.out, true);
 	}
 
 	public void logResponse(HttpResponse response) {
-		HttpFormatterUtils.format(response, System.out);
+		HttpFormatterUtils.format(response, System.out, true);
 	}
 
 }

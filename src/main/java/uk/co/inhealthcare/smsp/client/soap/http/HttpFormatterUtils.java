@@ -11,20 +11,26 @@ import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
 
+import uk.co.inhealthcare.smsp.client.utils.XMLFormatterUtils;
+
 public class HttpFormatterUtils {
 
 	public static class Formatter {
 
 		private PrintStream out;
+		private boolean includeTitle;
 
-		public Formatter(PrintStream out) {
+		public Formatter(PrintStream out, boolean includeTitle) {
 			this.out = out;
+			this.includeTitle = includeTitle;
 		}
 
 		public void writeRequest(HttpRequest request) {
 
-			writeTitle("HTTP REQUEST");
-			spacer();
+			if (includeTitle) {
+				writeTitle("HTTP REQUEST");
+				spacer();
+			}
 			writeRequestLine(request);
 			spacer();
 			writeHeaders(request.getAllHeaders());
@@ -37,7 +43,8 @@ public class HttpFormatterUtils {
 			if (request instanceof HttpEntityEnclosingRequest) {
 				HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
 				try {
-					this.out.println(EntityUtils.toString(entity));
+
+					this.out.println(XMLFormatterUtils.prettyFormat(EntityUtils.toString(entity)));
 				} catch (ParseException | IOException e) {
 					e.printStackTrace();
 				}
@@ -66,8 +73,10 @@ public class HttpFormatterUtils {
 
 		public void writeResponse(HttpResponse response) {
 
-			writeTitle("HTTP RESPONSE");
-			spacer();
+			if (includeTitle) {
+				writeTitle("HTTP RESPONSE");
+				spacer();
+			}
 			this.out.println(response.getStatusLine());
 			spacer();
 			writeHeaders(response.getAllHeaders());
@@ -78,19 +87,20 @@ public class HttpFormatterUtils {
 		private void writeResponseBody(HttpResponse response) {
 			HttpEntity entity = response.getEntity();
 			try {
-				this.out.println(EntityUtils.toString(entity));
+				this.out.println(XMLFormatterUtils.prettyFormat(EntityUtils.toString(entity)));
 			} catch (ParseException | IOException e) {
 				e.printStackTrace();
 			}
 		}
+
 	}
 
-	public static void format(HttpRequest request, PrintStream out) {
-		new Formatter(out).writeRequest(request);
+	public static void format(HttpRequest request, PrintStream out, boolean includeTitle) {
+		new Formatter(out, includeTitle).writeRequest(request);
 	}
 
-	public static void format(HttpResponse response, PrintStream out) {
-		new Formatter(out).writeResponse(response);
+	public static void format(HttpResponse response, PrintStream out, boolean includeTitle) {
+		new Formatter(out, includeTitle).writeResponse(response);
 	}
 
 }
