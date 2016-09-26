@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>uk.co.inhealthcare.oss</groupId>
 	<artifactId>smsp-client-core</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>smsp-client-core</name>
 	<description>Core code for creating an SMSP client</description>
 	<packaging>jar</packaging>
@@ -151,7 +151,6 @@
 	
 	<scm>
 		<developerConnection>scm:git:https://github.com/Inhealthcare/smsp-client-core.git</developerConnection>
-	  <tag>smsp-client-core-0.0.4</tag>
   </scm>
 	
 	
